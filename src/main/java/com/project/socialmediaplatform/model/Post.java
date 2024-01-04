@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "posts")
@@ -34,6 +35,18 @@ public class Post {
 
     @Column(name = "last_modified_on")
     private Timestamp lastModifiedOn;
+
+
+    public Post() {
+    }
+
+    public Post(Long postId, User user, byte[] content, Timestamp postedOn, Timestamp lastModifiedOn) {
+        this.postId = postId;
+        this.user = user;
+        this.content = content;
+        this.postedOn = postedOn;
+        this.lastModifiedOn = lastModifiedOn;
+    }
 
     public Long getPostId() {
         return postId;
@@ -63,17 +76,16 @@ public class Post {
         return postedOn;
     }
 
-    public void setPostedOn(Timestamp postedOn) {
-        this.postedOn = postedOn;
+    public void setPostedOn(Timestamp date) {
+        this.postedOn = date;
     }
 
     public Timestamp getLastModifiedOn() {
         return lastModifiedOn;
     }
 
-    public void setLastModifiedOn(Timestamp lastModifiedOn) {
-        this.lastModifiedOn = lastModifiedOn;
+    public void setLastModifiedOn(Timestamp date) {
+        this.lastModifiedOn = date;
     }
 
-    
 }

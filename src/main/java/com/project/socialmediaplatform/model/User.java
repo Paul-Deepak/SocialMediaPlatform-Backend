@@ -41,6 +41,18 @@ public class User {
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
+    public User(Long userId, String userName, String email, String password, byte[] profilePic, String bio,
+            Date createdDate, Date modifiedDate, boolean isActive) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.profilePic = profilePic;
+        this.bio = bio;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.isActive = isActive;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -113,5 +125,4 @@ public class User {
         this.isActive = isActive;
     }
 
-    
 }

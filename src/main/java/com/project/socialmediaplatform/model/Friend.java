@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "friendlist")
-public class Friends {
+public class Friend {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +40,20 @@ public class Friends {
     @ManyToOne
     @JoinColumn(name = "request_sent_by")
     private User requestSentBy;
+
+    public Friend() {
+    }
+
+    public Friend(Long friendListId, User user, User friend, String status, Date requestTime, Date modifiedTime,
+            User requestSentBy) {
+        this.friendListId = friendListId;
+        this.user = user;
+        this.friend = friend;
+        this.status = status;
+        this.requestTime = requestTime;
+        this.modifiedTime = modifiedTime;
+        this.requestSentBy = requestSentBy;
+    }
 
     public Long getFriendListId() {
         return friendListId;

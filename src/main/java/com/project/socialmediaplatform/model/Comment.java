@@ -37,6 +37,20 @@ public class Comment {
     @Column(name = "last_modified_on")
     private Timestamp lastModifiedOn;
 
+    
+    public Comment() {
+    }
+
+    public Comment(Long commentId, User user, Post post, String commentText, Timestamp commentedOn,
+            Timestamp lastModifiedOn) {
+        this.commentId = commentId;
+        this.user = user;
+        this.post = post;
+        this.commentText = commentText;
+        this.commentedOn = commentedOn;
+        this.lastModifiedOn = lastModifiedOn;
+    }
+
     public Long getCommentId() {
         return commentId;
     }

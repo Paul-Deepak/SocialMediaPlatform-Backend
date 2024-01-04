@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.UserRepo;
 
@@ -38,17 +39,38 @@ public class UserService {
                     user.setProfilePic(updatedUser.getProfilePic());
                     user.setBio(updatedUser.getBio());
                     user.setModifiedDate(new Date());
-
                     return userRepo.save(user);
                 })
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
     }
 
+
+    public String postContent(String email, String postContent) {
+        return "posted successfully";
+    }
+
+    
     public void deactivateUser(Long userId) {
         userRepo.findById(userId)
                 .ifPresent(user -> {
                     user.setActive(false);
                     userRepo.save(user);
                 });
+    }
+
+    public List<Post> getUserPosts(String email) {
+        return null;
+    }
+
+    public List<User> pendingFriendRequest(String email) {
+        return null;
+    }
+
+    public List<User> getFriends(String email) {
+        return null;
+    }
+
+    public String sendFriendRequest(String email, Long friendId) {
+        return null;
     }
 }
