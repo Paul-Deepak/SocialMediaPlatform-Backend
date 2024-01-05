@@ -41,6 +41,9 @@ public class User {
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
+    public User() {
+    }
+
     public User(Long userId, String userName, String email, String password, byte[] profilePic, String bio,
             Date createdDate, Date modifiedDate, boolean isActive) {
         this.userName = userName;

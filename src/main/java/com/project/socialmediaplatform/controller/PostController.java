@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.service.PostService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/posts")
@@ -23,26 +26,33 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        Post createdPost = postService.createPost(post);
-        return ResponseEntity.ok(createdPost);
-    }
+    // @PostMapping("/create")
+    // public ResponseEntity<Post> createPost(@RequestBody PostModel post) {
+    //     Post createdPost = postService.createPost(post);
+    //     return ResponseEntity.ok(createdPost);
+    // }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Post>> getAllPosts() {
-        List<Post> posts = postService.getAllPosts();
-        return ResponseEntity.ok(posts);
-    }
-       @PutMapping("/{postId}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long postId, @RequestBody Post updatedPost) {
-        Post updatedPostInfo = postService.updatePost(postId, updatedPost);
-        return ResponseEntity.ok(updatedPostInfo);
-    }
+    //    @PutMapping("/{postId}")
+    // public ResponseEntity<Post> updatePost(@PathVariable Long postId, @RequestBody byte[] updatedPost) {
+    //     Post updatedPostInfo = postService.editPost(postId, updatedPost);
+    //     return ResponseEntity.ok(updatedPostInfo);
+    // }
 
-    @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
-        return ResponseEntity.ok().build();
+    // @DeleteMapping("/{postId}")
+    // public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
+    //     postService.deletePost(postId);
+    //     return ResponseEntity.ok().build();
+    // }
+
+    @PostMapping("/{postId}/comment")
+    public Comment addComment(@PathVariable Long postId,@RequestBody String commentText) {
+        
+        return null;
     }
+    
+
+
 }
+
+
+

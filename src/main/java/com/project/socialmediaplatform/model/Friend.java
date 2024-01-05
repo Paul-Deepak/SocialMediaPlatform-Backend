@@ -22,11 +22,11 @@ public class Friend {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User userId;
 
     @ManyToOne
     @JoinColumn(name = "friend_id", nullable = false)
-    private User friend;
+    private User friendId;
 
     @Column(name = "status", nullable = false, length = 20)
     private String status; // PENDING, ACCEPTED, REJECTED, etc.
@@ -44,11 +44,11 @@ public class Friend {
     public Friend() {
     }
 
-    public Friend(Long friendListId, User user, User friend, String status, Date requestTime, Date modifiedTime,
+    public Friend(Long friendListId, User userId, User friendId, String status, Date requestTime, Date modifiedTime,
             User requestSentBy) {
         this.friendListId = friendListId;
-        this.user = user;
-        this.friend = friend;
+        this.userId = userId;
+        this.friendId = friendId;
         this.status = status;
         this.requestTime = requestTime;
         this.modifiedTime = modifiedTime;
@@ -63,20 +63,20 @@ public class Friend {
         this.friendListId = friendListId;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(User user) {
+        this.userId = user;
     }
 
-    public User getFriend() {
-        return friend;
+    public User getFriendId() {
+        return friendId;
     }
 
-    public void setFriend(User friend) {
-        this.friend = friend;
+    public void setFriendId(User friend) {
+        this.friendId = friend;
     }
 
     public String getStatus() {

@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.User;
+import com.project.socialmediaplatform.repository.PostRepo;
 import com.project.socialmediaplatform.repository.UserRepo;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private PostRepo postRepo;
 
     public User registerUser(User user) {
         user.setCreatedDate(new Date());
@@ -23,6 +26,41 @@ public class UserService {
         return userRepo.save(user);
     }
 
+    public User updateUser(Long userId, User updatedUser) {
+        return userRepo.findById(userId)
+                .map(user -> {
+                    if (updatedUser.getUserName() != null)
+                        user.setUserName(updatedUser.getUserName());
+                    // if (updatedUser.getEmail() != null)
+                    //     user.setEmail(updatedUser.getEmail());
+                    if (updatedUser.getProfilePic() != null)
+                        user.setProfilePic(updatedUser.getProfilePic());
+                    if (updatedUser.getBio() != null)
+                        user.setBio(updatedUser.getBio());
+                    if (updatedUser.getModifiedDate() != null)
+                        user.setModifiedDate(new Date());
+                    if (updatedUser.getPassword() != null)
+                        user.setPassword(new BCryptPasswordEncoder().encode(updatedUser.getPassword()));
+                    return userRepo.save(user);
+                })
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
+    }
+
+    public List<Post> getOtherUserPosts(Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
+        List<Post> otherUserPosts = postRepo.findByUserNot(user);
+        return otherUserPosts;
+    }
+
+    public void deactivateUser(Long userId) {
+        userRepo.findById(userId)
+                .ifPresent(user -> {
+                    user.setActive(false);
+                    userRepo.save(user);
+                });
+    }
+  
     public List<User> getAllUsers() {
         return userRepo.findAll();
     }
@@ -31,32 +69,11 @@ public class UserService {
         return userRepo.findById(userId).get();
     }
 
-    public User updateUser(Long userId, User updatedUser) {
-        return userRepo.findById(userId)
-                .map(user -> {
-                    user.setUserName(updatedUser.getUserName());
-                    user.setEmail(updatedUser.getEmail());
-                    user.setProfilePic(updatedUser.getProfilePic());
-                    user.setBio(updatedUser.getBio());
-                    user.setModifiedDate(new Date());
-                    return userRepo.save(user);
-                })
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
-    }
+    // public String postContent(String email, String postContent) {
+    // postRepo.save()
+    // return "posted successfully";
+    // }
 
-
-    public String postContent(String email, String postContent) {
-        return "posted successfully";
-    }
-
-    
-    public void deactivateUser(Long userId) {
-        userRepo.findById(userId)
-                .ifPresent(user -> {
-                    user.setActive(false);
-                    userRepo.save(user);
-                });
-    }
 
     public List<Post> getUserPosts(String email) {
         return null;
@@ -73,4 +90,5 @@ public class UserService {
     public String sendFriendRequest(String email, Long friendId) {
         return null;
     }
+
 }
