@@ -2,6 +2,7 @@ package com.project.socialmediaplatform.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -63,5 +64,21 @@ private PostRepo postRepo;
         comment.setLastModifiedOn(Timestamp.from(Instant.now()));
         return commentRepo.save(comment);
     }
+
+    public Comment editComment(Long commentId,String updatedComment){
+        commentRepo.findById(commentId).ifPresent(comment -> {
+            comment.setCommentText(updatedComment);
+            commentRepo.save(comment);
+        });
+        return null;
+    }
+
+    public void deleteComment(Long commentId){
+        commentRepo.findById(commentId).ifPresent(comment -> {  
+            commentRepo.delete(comment);
+        });
+    }
+        
+
 
 }

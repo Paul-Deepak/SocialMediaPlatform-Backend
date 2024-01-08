@@ -49,6 +49,12 @@ public class UserController {
         return ResponseEntity.ok(updatedUserInfo);
     }
 
+    @PutMapping("/deactivate/{userId}")
+    public ResponseEntity<String> deactivateUser(@PathVariable Long userId) {
+        userService.deactivateUser(userId);
+        return ResponseEntity.ok("Deactivated Successfully");
+    }
+
     //createpost
     @PostMapping("post/{userId}")
     public ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody byte[] postContent) {
@@ -74,7 +80,6 @@ public class UserController {
     @GetMapping("seeposts/{userId}")
     public ResponseEntity<List<Post>> getOtherUserPosts(@PathVariable Long userId) {
         List<Post> otherUserPosts = userService.getOtherUserPosts(userId);
-        System.out.println(otherUserPosts);
         return ResponseEntity.ok(otherUserPosts);
     }
 
@@ -104,27 +109,6 @@ public class UserController {
     // Long friendId = Long.parseLong(requestMap.get("friendId"));
     // System.out.println(email + " " + friendId);
     // return this.userService.sendFriendRequest(email, friendId);
-    // }
-
-    @PostMapping("/friends")
-    public List<User> friends(@RequestBody Map<String, String> requestMap) {
-        String email = requestMap.get("email");
-        // System.out.println(email);
-        return this.userService.getFriends(email);
-    }
-
-    @PostMapping(value = "/api/user/pendingFriendRequest")
-    public List<User> pendingFriendRequest(@RequestBody Map<String, String> requestMap) {
-        String email = requestMap.get("email");
-        // System.out.println(email);
-        return this.userService.pendingFriendRequest(email);
-    }
-
-    // @GetMapping("{UserId}")
-    // public User getUser(Long userId){
-    // return new User((long) 1, "paul", "abc@gmail.com",
-    // "abccc", null, null, new Date(), null, false);
-
     // }
 
 }

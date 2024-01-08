@@ -29,7 +29,7 @@ public class Friend {
     private User friendId;
 
     @Column(name = "status", nullable = false, length = 20)
-    private String status; // PENDING, ACCEPTED, REJECTED, etc.
+    private String status; // PENDING,ACCEPTED,REJECTED
 
     @Column(name = "request_time", nullable = false)
     private Date requestTime;

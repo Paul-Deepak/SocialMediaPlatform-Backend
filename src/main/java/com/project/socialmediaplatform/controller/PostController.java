@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.service.PostService;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -44,11 +44,11 @@ public class PostController {
     //     return ResponseEntity.ok().build();
     // }
 
-    @PostMapping("/{postId}/comment")
-    public Comment addComment(@PathVariable Long postId,@RequestBody String commentText) {
+    // @PostMapping("/{postId}/comment")
+    // public Comment addComment(@PathVariable Long postId,@RequestBody String commentText) {
         
-        return null;
-    }
+    //     return null;
+    // }
     
 
 

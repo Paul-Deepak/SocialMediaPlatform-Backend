@@ -2,13 +2,11 @@ package com.project.socialmediaplatform.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.ProviderNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.project.socialmediaplatform.controller.PostModel;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.PostRepo;
@@ -54,8 +52,7 @@ public class PostService {
     }
 
     public Post editPost(Long postId, byte[] updatedContent) {
-        Post existingPost = postRepo.findById(postId)
-                .orElseThrow(() -> new ProviderNotFoundException("Post not found with ID: " + postId));
+        Post existingPost = postRepo.findById(postId).get();
         existingPost.setContent(updatedContent);
         existingPost.setLastModifiedOn(Timestamp.from(Instant.now()));
         return postRepo.save(existingPost);

@@ -14,6 +14,9 @@ public class LikeKey implements Serializable {
     @Column(name = "like_type", length = 8, nullable = false)
     private String likeType;
 
+    @Column(name = "post/comment_id")
+    private Long likedId;
+    
     public Long getUserId() {
         return userId;
     }
@@ -28,6 +31,23 @@ public class LikeKey implements Serializable {
 
     public void setLikeType(String likeType) {
         this.likeType = likeType;
+    }
+
+    public Long getLikedId() {
+        return likedId;
+    }
+
+    public void setLikedId(Long likedId) {
+        this.likedId = likedId;
+    }
+
+    public LikeKey(Long userId, String likeType, Long likedId) {
+        this.userId = userId;
+        this.likeType = likeType;
+        this.likedId = likedId;
+    }
+
+    public LikeKey() {
     }
     
 }

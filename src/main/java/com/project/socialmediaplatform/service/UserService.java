@@ -22,6 +22,8 @@ public class UserService {
 
     public User registerUser(User user) {
         user.setCreatedDate(new Date());
+        user.setActive(true);
+        user.setModifiedDate(new Date());
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return userRepo.save(user);
     }
@@ -29,28 +31,20 @@ public class UserService {
     public User updateUser(Long userId, User updatedUser) {
         return userRepo.findById(userId)
                 .map(user -> {
-                    if (updatedUser.getUserName() != null)
+                    if (updatedUser.getUserName()!=null)
                         user.setUserName(updatedUser.getUserName());
                     // if (updatedUser.getEmail() != null)
-                    //     user.setEmail(updatedUser.getEmail());
-                    if (updatedUser.getProfilePic() != null)
+                    // user.setEmail(updatedUser.getEmail());
+                    if (updatedUser.getProfilePic()!=null)
                         user.setProfilePic(updatedUser.getProfilePic());
-                    if (updatedUser.getBio() != null)
+                    if (updatedUser.getBio()!=null)
                         user.setBio(updatedUser.getBio());
-                    if (updatedUser.getModifiedDate() != null)
+                    if (updatedUser.getModifiedDate()!=null)
                         user.setModifiedDate(new Date());
-                    if (updatedUser.getPassword() != null)
+                    if (updatedUser.getPassword()!=null)
                         user.setPassword(new BCryptPasswordEncoder().encode(updatedUser.getPassword()));
                     return userRepo.save(user);
-                })
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
-    }
-
-    public List<Post> getOtherUserPosts(Long userId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
-        List<Post> otherUserPosts = postRepo.findByUserNot(user);
-        return otherUserPosts;
+                }).get();
     }
 
     public void deactivateUser(Long userId) {
@@ -60,7 +54,14 @@ public class UserService {
                     userRepo.save(user);
                 });
     }
-  
+
+
+    public List<Post> getOtherUserPosts(Long userId) {
+        User user = userRepo.findById(userId).get();
+        List<Post> otherUserPosts = postRepo.findByUser(user);
+        return otherUserPosts;
+    }
+
     public List<User> getAllUsers() {
         return userRepo.findAll();
     }
@@ -69,26 +70,10 @@ public class UserService {
         return userRepo.findById(userId).get();
     }
 
-    // public String postContent(String email, String postContent) {
-    // postRepo.save()
-    // return "posted successfully";
-    // }
-
-
     public List<Post> getUserPosts(String email) {
         return null;
     }
 
-    public List<User> pendingFriendRequest(String email) {
-        return null;
-    }
-
-    public List<User> getFriends(String email) {
-        return null;
-    }
-
-    public String sendFriendRequest(String email, Long friendId) {
-        return null;
-    }
+    
 
 }
