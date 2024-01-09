@@ -24,7 +24,7 @@ public class User {
     private String email;
 
     @Column(name = "password", nullable = false)
-    private String password; // Store hashed password
+    private String password; 
 
     @Column(name = "profile_pic")
     private byte[] profilePic;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
+import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.service.PostService;
 
 
@@ -25,32 +26,21 @@ public class PostController {
 
     @Autowired
     private PostService postService;
-
-    // @PostMapping("/create")
-    // public ResponseEntity<Post> createPost(@RequestBody PostModel post) {
-    //     Post createdPost = postService.createPost(post);
-    //     return ResponseEntity.ok(createdPost);
-    // }
-
-    //    @PutMapping("/{postId}")
-    // public ResponseEntity<Post> updatePost(@PathVariable Long postId, @RequestBody byte[] updatedPost) {
-    //     Post updatedPostInfo = postService.editPost(postId, updatedPost);
-    //     return ResponseEntity.ok(updatedPostInfo);
-    // }
-
-    // @DeleteMapping("/{postId}")
-    // public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
-    //     postService.deletePost(postId);
-    //     return ResponseEntity.ok().build();
-    // }
-
-    // @PostMapping("/{postId}/comment")
-    // public Comment addComment(@PathVariable Long postId,@RequestBody String commentText) {
-        
-    //     return null;
-    // }
     
 
+    // //deletepost
+    // @DeleteMapping("post/{postId}")
+    // public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
+    //     postService.deletePost(postId);
+    //     return ResponseEntity.noContent().build();
+    // }
+    
+    // //editpost
+    // @PutMapping("/post/{postId}")
+    // public ResponseEntity<Post> editPost(@PathVariable Long postId, @RequestBody byte[] updatedContent) {
+    //     Post editedPost = postService.editPost(postId, updatedContent);
+    //     return ResponseEntity.ok(editedPost);
+    // }
 
 }
 

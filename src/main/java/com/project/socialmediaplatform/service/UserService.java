@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -62,18 +61,9 @@ public class UserService {
         return otherUserPosts;
     }
 
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
-    }
 
     public User getUserById(Long userId) {
         return userRepo.findById(userId).get();
     }
-
-    public List<Post> getUserPosts(String email) {
-        return null;
-    }
-
     
-
 }

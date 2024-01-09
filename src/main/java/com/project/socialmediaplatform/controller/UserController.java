@@ -93,22 +93,4 @@ public class UserController {
         return ResponseEntity.ok(addedComment);
     }
 
-
-    // @PostMapping(value = "/post")
-    // public String postContent(@RequestBody Map<String, String> postMap) {
-    // System.out.println(postMap);
-    // String email = postMap.get("email");
-    // String postContent = postMap.get("postContent");
-    // return this.userService.postContent(email, postContent);
-    // }
-
-    // @PostMapping(value = "/api/user/sendFriendRequest")
-    // public String sendFriendRequest(@RequestBody Map<String, String> requestMap)
-    // {
-    // String email = requestMap.get("email");
-    // Long friendId = Long.parseLong(requestMap.get("friendId"));
-    // System.out.println(email + " " + friendId);
-    // return this.userService.sendFriendRequest(email, friendId);
-    // }
-
 }

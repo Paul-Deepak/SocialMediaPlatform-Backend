@@ -16,7 +16,7 @@ public class FriendListService {
     @Autowired
     private FriendListRepo friendListRepo;
 
-    public void sendFriendRequest(User sender, User receiver) {
+    public Friend sendFriendRequest(User sender, User receiver) {
         Friend friendRequest = new Friend();
         friendRequest.setUserId(sender);
         friendRequest.setFriendId(receiver);
@@ -24,13 +24,18 @@ public class FriendListService {
         friendRequest.setRequestTime(new Date());
         friendRequest.setRequestSentBy(sender);
         friendListRepo.save(friendRequest);
+        return friendRequest;
     }
 
-    public void acceptFriendRequest(){
-    }
+    // public Friend acceptFriendRequest(User userId,User friendId){
+    //     Friend friend=friendListRepo.findByUserIdAndFriendId(null, null);
+    //     friend.setStatus("ACCEPTED");
+    //     return friendListRepo.save(friend);
+    // }
 
-    public List<User> seePendingFriendRequests(String email) {
+    public List<User> seePendingFriendRequests() {
         return null;
+        
     }
 
     public List<User> getFriends(String email) {

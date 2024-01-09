@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.ProviderNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.project.socialmediaplatform.model.Post;
