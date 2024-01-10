@@ -43,6 +43,12 @@ public class UserController {
         return ResponseEntity.ok(registeredUser);
     }
 
+    // @PostMapping("/login")
+    // public ResponseEntity<User> userLogin(@RequestBody User user){
+    //     User userLogin = userService.userLogin(user);
+    //     return ResponseEntity.ok(user);
+    // }
+
     @PutMapping("/update/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         User updatedUserInfo = userService.updateUser(userId, updatedUser);

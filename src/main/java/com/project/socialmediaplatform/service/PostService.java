@@ -20,27 +20,6 @@ public class PostService {
     @Autowired
     public UserRepo userRepo;
 
-    // public Post createPost(PostModel postModel) {
-
-    // try {
-
-    // Post post = new Post();
-
-    // User user = userRepo.getReferenceById(postModel.getUserId());
-
-    // post.setUser(user);
-    // post.setContent(postModel.getContent().getBytes());
-    // post.setPostedOn(Timestamp.from(Instant.now()));
-    // post.setLastModifiedOn(Timestamp.from(Instant.now()));
-    // postRepo.save(post);
-    // return post;
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // return null;
-    // }
-
-
     public Post createPost(User user, byte[] postContent) {
         Post post = new Post();
         post.setUser(user);

@@ -3,7 +3,6 @@ package com.project.socialmediaplatform.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.web.exchanges.HttpExchange.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +46,15 @@ public class FriendController {
     public ResponseEntity<List<Friend>> getFriends(@PathVariable Long userId){
         List<Friend> friends = friendListService.getFriends(userId);
         return ResponseEntity.ok(friends);
-        
     }
+
+    //rejectreq
+    @PutMapping("/{userId}/rejectReq/{friendId}")
+    public ResponseEntity<Friend> rejectFriendRequest(@PathVariable Long friendId, @PathVariable Long userId){
+        Friend rejectReq = friendListService.rejectFriendRequest(friendId, userId);
+        return ResponseEntity.ok(rejectReq);    
+    }
+
+    //unfriend a friend
+
 }

@@ -22,9 +22,7 @@ public class CommentService {
     private UserRepo userRepo;
     @Autowired
     private PostRepo postRepo;
-    @Autowired
-    private PostService postService;
-
+  
     // public Comment addComment(Long postId, Long userId, String commentText) {
     // Post post=null;
     // try{

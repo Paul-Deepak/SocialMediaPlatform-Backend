@@ -31,12 +31,18 @@ public class FriendListService {
         return friendRequest;
     }
 
-    public Friend acceptFriendRequest(Long userId,Long friendId){
-        
+    public Friend acceptFriendRequest(Long userId,Long friendId){    
         User user1=userRepo.findById(userId).get();
         User user2=userRepo.findById(friendId).get();
         Friend friend=friendListRepo.findByUserIdAndFriendId(user1,user2).get(0);
         friend.setStatusId(1);
+        return friendListRepo.save(friend);
+    }
+    public Friend rejectFriendRequest(Long userId,Long friendId){    
+        User user1=userRepo.findById(userId).get();
+        User user2=userRepo.findById(friendId).get();
+        Friend friend=friendListRepo.findByUserIdAndFriendId(user1,user2).get(0);
+        friend.setStatusId(2);
         return friendListRepo.save(friend);
     }
 

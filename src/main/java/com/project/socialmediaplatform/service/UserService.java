@@ -66,5 +66,18 @@ public class UserService {
     public User getUserById(Long userId) {
         return userRepo.findById(userId).get();
     }
+
+    //login
+    // public User userLogin(User user) {
+    //     String Email = user.getEmail();
+    //     String Pass = user.getPassword();
+
+    //     User existingUser = userRepo.findByEmail(Email);
+    //     if(existingUser.getPassword().equals(new BCryptPasswordEncoder().encode(Pass)) ){
+    //         return user;
+    //     }
+    //     else
+    //     return null;
+    // }
     
 }
