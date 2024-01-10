@@ -54,10 +54,10 @@ public class CommentService {
             return null;
         }
         Comment comment = new Comment();
-        comment.setPost(post);
-        comment.setUser(user);
+        comment.setPostId(post);
+        comment.setUserId(user);
         comment.setCommentText(newComment);
-        comment.setCommentedOn(Timestamp.from(Instant.now()));
+        comment.setCreatedOn(Timestamp.from(Instant.now()));
         comment.setLastModifiedOn(Timestamp.from(Instant.now()));
         return commentRepo.save(comment);
     }
@@ -70,10 +70,10 @@ public class CommentService {
         return null;
     }
 
-    public void deleteComment(Long commentId) {
-        commentRepo.findById(commentId).ifPresent(comment -> {
-            commentRepo.delete(comment);
-        });
+    public Comment deleteComment(Long commentId) {
+        Comment comment=commentRepo.findById(commentId).get();
+            comment.setDeleted(true);
+            commentRepo.save(comment);
+            return comment;
+        }
     }
-
-}

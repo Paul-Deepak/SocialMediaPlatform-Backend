@@ -17,28 +17,28 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(name = "user_name", nullable = false, length = 50)
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "email", unique = true, nullable = false, length = 30)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password; 
 
     @Column(name = "profile_pic")
     private byte[] profilePic;
 
-    @Column(name = "bio", length = 100)
+    @Column(name = "bio")
     private String bio;
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date")
     private Date createdDate;
 
     @Column(name = "modified_date")
     private Date modifiedDate;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "isactive")
     private boolean isActive;
 
     public User() {

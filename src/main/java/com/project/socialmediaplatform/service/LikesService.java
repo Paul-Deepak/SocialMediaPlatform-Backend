@@ -22,7 +22,7 @@ public class LikesService {
         LikeKey likekey = new LikeKey();
         likekey.setUserId(userId);
         likekey.setLikeType("post");
-        likekey.setLikedId(postId);
+        likekey.setTypeId(postId);
 
         Like like = new Like();
         like.setId(likekey);
@@ -34,7 +34,7 @@ public class LikesService {
     }
 
     public void removeLikeForPost(LikeKey likeKey) {
-        LikeKey likeId = new LikeKey(likeKey.getUserId(), likeKey.getLikeType(), likeKey.getLikedId());
+        LikeKey likeId = new LikeKey(likeKey.getUserId(), likeKey.getLikeType(), likeKey.getTypeId());
         likeRepo.deleteById(likeId);
     }
 
@@ -42,7 +42,7 @@ public class LikesService {
         LikeKey likekey = new LikeKey();
         likekey.setUserId(userId);
         likekey.setLikeType("comment");
-        likekey.setLikedId(commentId);
+        likekey.setTypeId(commentId);
 
         Like like = new Like();
         like.setId(likekey);
@@ -53,7 +53,7 @@ public class LikesService {
     }
 
     public void removeLikeForComment(LikeKey likeKey) {
-        LikeKey likeId = new LikeKey(likeKey.getUserId(), likeKey.getLikeType(), likeKey.getLikedId());
+        LikeKey likeId = new LikeKey(likeKey.getUserId(), likeKey.getLikeType(), likeKey.getTypeId());
         likeRepo.deleteById(likeId);
     }
 

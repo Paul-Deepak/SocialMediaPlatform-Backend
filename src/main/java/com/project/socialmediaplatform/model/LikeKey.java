@@ -1,21 +1,21 @@
 package com.project.socialmediaplatform.model;
 
-import java.io.Serializable;
+// import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
-@Embeddable
-public class LikeKey implements Serializable {
+// @Embeddable
+public class LikeKey{
 
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "like_type", length = 8, nullable = false)
+    @Column(name = "type")
     private String likeType;
 
-    @Column(name = "post/comment_id")
-    private Long likedId;
+    @Column(name = "type_id")
+    private Long typeId;
     
     public Long getUserId() {
         return userId;
@@ -33,18 +33,18 @@ public class LikeKey implements Serializable {
         this.likeType = likeType;
     }
 
-    public Long getLikedId() {
-        return likedId;
+    public Long getTypeId() {
+        return typeId;
     }
 
-    public void setLikedId(Long likedId) {
-        this.likedId = likedId;
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
     }
-
-    public LikeKey(Long userId, String likeType, Long likedId) {
+ 
+    public LikeKey(Long userId, String likeType, Long typeId) {
         this.userId = userId;
         this.likeType = likeType;
-        this.likedId = likedId;
+        this.typeId = typeId;
     }
 
     public LikeKey() {

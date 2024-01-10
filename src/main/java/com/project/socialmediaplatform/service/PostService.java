@@ -45,6 +45,7 @@ public class PostService {
         Post post = new Post();
         post.setUser(user);
         post.setContent(postContent);
+        post.setDeleted(false);
         post.setPostedOn(Timestamp.from(Instant.now()));
         post.setLastModifiedOn(Timestamp.from(Instant.now()));
         return postRepo.save(post);
@@ -57,16 +58,20 @@ public class PostService {
         return postRepo.save(existingPost);
     }
 
-    public void deletePost(Long postId) {
+    public Post deletePost(Long postId) {
         try {
-            postRepo.deleteById(postId);
+            Post deletedPost=postRepo.findByPostId(postId).get(0);
+            deletedPost.setDeleted(true);
+            return postRepo.save(deletedPost);
         } catch (Exception E) {
             E.printStackTrace();
         }
+        return null;
     }
 
     public Post getPostById(Long postId) {
-        return null;
+        return postRepo.findByPostId(postId).get(0);
     }
+    
 
 }

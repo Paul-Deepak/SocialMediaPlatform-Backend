@@ -22,33 +22,36 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User userId;
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    private Post postId;
 
     @Column(name = "comment_text", nullable = false, length = 50)
     private String commentText;
 
-    @Column(name = "commented_on")
-    private Timestamp commentedOn;
+    @Column(name = "created_on")
+    private Timestamp createdOn;
 
     @Column(name = "last_modified_on")
     private Timestamp lastModifiedOn;
 
+    @Column(name = "isdeleted")
+    private boolean isDeleted;
     
     public Comment() {
     }
 
-    public Comment(Long commentId, User user, Post post, String commentText, Timestamp commentedOn,
-            Timestamp lastModifiedOn) {
+    public Comment(Long commentId, User userId, Post postId, String commentText, Timestamp createdOn,
+            Timestamp lastModifiedOn, boolean isDeleted) {
         this.commentId = commentId;
-        this.user = user;
-        this.post = post;
+        this.userId = userId;
+        this.postId = postId;
         this.commentText = commentText;
-        this.commentedOn = commentedOn;
+        this.createdOn = createdOn;
         this.lastModifiedOn = lastModifiedOn;
+        this.isDeleted = isDeleted;
     }
 
     public Long getCommentId() {
@@ -59,20 +62,20 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
-    public Post getPost() {
-        return post;
+    public Post getPostId() {
+        return postId;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPostId(Post postId) {
+        this.postId = postId;
     }
 
     public String getCommentText() {
@@ -83,12 +86,12 @@ public class Comment {
         this.commentText = commentText;
     }
 
-    public Timestamp getCommentedOn() {
-        return commentedOn;
+    public Timestamp getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCommentedOn(Timestamp commentedOn) {
-        this.commentedOn = commentedOn;
+    public void setCreatedOn(Timestamp createdOn) {
+        this.createdOn = createdOn;
     }
 
     public Timestamp getLastModifiedOn() {
@@ -99,5 +102,13 @@ public class Comment {
         this.lastModifiedOn = lastModifiedOn;
     }
 
-   
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 }
+
+

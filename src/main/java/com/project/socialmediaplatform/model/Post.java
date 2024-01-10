@@ -30,22 +30,25 @@ public class Post {
     @Column(name = "content")
     private byte[] content;
 
-    @Column(name = "posted_on")
+    @Column(name = "created_on")
     private Timestamp postedOn;
 
     @Column(name = "last_modified_on")
     private Timestamp lastModifiedOn;
 
+    @Column(name = "isdeleted")
+    private boolean isDeleted;
 
     public Post() {
     }
 
-    public Post(Long postId, User user, byte[] content, Timestamp postedOn, Timestamp lastModifiedOn) {
+    public Post(Long postId, User user, byte[] content, Timestamp postedOn, Timestamp lastModifiedOn,boolean isDeleted) {
         this.postId = postId;
         this.user = user;
         this.content = content;
         this.postedOn = postedOn;
         this.lastModifiedOn = lastModifiedOn;
+        this.isDeleted =isDeleted;
     }
 
     public Long getPostId() {
@@ -87,5 +90,15 @@ public class Post {
     public void setLastModifiedOn(Timestamp date) {
         this.lastModifiedOn = date;
     }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    
 
 }

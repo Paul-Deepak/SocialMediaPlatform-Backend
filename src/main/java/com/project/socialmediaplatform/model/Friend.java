@@ -21,39 +21,36 @@ public class Friend {
     private Long friendListId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "request_sent_by")
     private User userId;
 
     @ManyToOne
-    @JoinColumn(name = "friend_id", nullable = false)
+    @JoinColumn(name = "request_sent_to")
     private User friendId;
 
-    @Column(name = "status", nullable = false, length = 20)
-    private String status; // PENDING,ACCEPTED,REJECTED
+    @Column(name = "status_id")
+    private int statusId; // PENDING(0),ACCEPTED(1),REJECTED(2),UNFRIEND(3)
 
-    @Column(name = "request_time", nullable = false)
+    @Column(name = "request_time")
     private Date requestTime;
 
     @Column(name = "modified_time")
     private Date modifiedTime;
 
-    @ManyToOne
-    @JoinColumn(name = "request_sent_by")
-    private User requestSentBy;
-
     public Friend() {
     }
 
-    public Friend(Long friendListId, User userId, User friendId, String status, Date requestTime, Date modifiedTime,
+    public Friend(Long friendListId, User userId, User friendId, int statusId, Date requestTime, Date modifiedTime,
             User requestSentBy) {
         this.friendListId = friendListId;
         this.userId = userId;
         this.friendId = friendId;
-        this.status = status;
+        this.statusId = statusId;
         this.requestTime = requestTime;
         this.modifiedTime = modifiedTime;
-        this.requestSentBy = requestSentBy;
     }
+
+
 
     public Long getFriendListId() {
         return friendListId;
@@ -79,14 +76,6 @@ public class Friend {
         this.friendId = friend;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public Date getRequestTime() {
         return requestTime;
     }
@@ -103,12 +92,12 @@ public class Friend {
         this.modifiedTime = modifiedTime;
     }
 
-    public User getRequestSentBy() {
-        return requestSentBy;
+    public int getStatusId() {
+        return statusId;
     }
 
-    public void setRequestSentBy(User requestSentBy) {
-        this.requestSentBy = requestSentBy;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
 }

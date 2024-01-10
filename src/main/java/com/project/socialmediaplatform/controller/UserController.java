@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@CrossOrigin("*")
-@RequestMapping("/api/user/")
+
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -63,10 +63,10 @@ public class UserController {
         return ResponseEntity.ok(createdPost);
     }
     //deletepost
-    @DeleteMapping("post/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
-        return ResponseEntity.noContent().build();
+    @PutMapping("post/delete/{postId}")
+    public ResponseEntity<Post> deletePost(@PathVariable Long postId) {
+        Post post=postService.deletePost(postId);
+        return ResponseEntity.ok(post);
     }
     
     //editpost

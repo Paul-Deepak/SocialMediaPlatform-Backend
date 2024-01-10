@@ -38,7 +38,7 @@ public class LikeController {
         return ResponseEntity.ok("Like for post removed successfully");
     
     }
-    @DeleteMapping("/comment/{commentId}")
+    @DeleteMapping("/comment")
     public ResponseEntity<String> removeLikeForComment(@RequestBody LikeKey likekey) {
         likeService.removeLikeForPost(likekey);
         return ResponseEntity.ok("Like for comment removed successfully");

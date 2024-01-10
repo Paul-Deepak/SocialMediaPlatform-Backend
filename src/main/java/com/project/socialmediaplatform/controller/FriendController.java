@@ -1,7 +1,11 @@
 package com.project.socialmediaplatform.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.web.exchanges.HttpExchange.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,10 +31,22 @@ public class FriendController {
 
     }
 
-    // @PutMapping("acceptReq/{friendId}")
-    // public ResponseEntity<Friend> acceptFriendRequest(@RequestBody User userId, @PathVariable User friendId){
-    //     Friend acceptReq = friendListService.acceptFriendRequest(userId, friendId);
-    //     return ResponseEntity.ok(acceptReq);
+    @PutMapping("/{userId}/acceptReq/{friendId}")
+    public ResponseEntity<Friend> acceptFriendRequest(@PathVariable Long friendId, @PathVariable Long userId){
+        Friend acceptReq = friendListService.acceptFriendRequest(friendId, userId);
+        return ResponseEntity.ok(acceptReq);    
+    }
+
+    @GetMapping("/{userId}/pendingRequests")
+    public ResponseEntity<List<Friend>> seePendingFriendRequests(@PathVariable Long userId){
+        List<Friend> pendingReq = friendListService.seePendingFriendRequests(userId);
+        return ResponseEntity.ok(pendingReq);    
+    }
+
+    @GetMapping("/{userId}/friends")
+    public ResponseEntity<List<Friend>> getFriends(@PathVariable Long userId){
+        List<Friend> friends = friendListService.getFriends(userId);
+        return ResponseEntity.ok(friends);
         
-    // }
+    }
 }

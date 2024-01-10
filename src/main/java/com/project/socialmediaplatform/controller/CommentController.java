@@ -28,10 +28,10 @@ public class CommentController {
         return ResponseEntity.ok(editedComment);
     }
 
-     @DeleteMapping("/{commentId}")
-    public ResponseEntity<String> removeComment(@PathVariable Long commentId) {
-        commentService.deleteComment(commentId);
-        return ResponseEntity.ok("Deleted Successfully");
+     @PutMapping("/delete/{commentId}")
+    public ResponseEntity<Comment> removeComment(@PathVariable Long commentId) {
+        Comment delComment=commentService.deleteComment(commentId);
+        return ResponseEntity.ok(delComment);
     }
 
     

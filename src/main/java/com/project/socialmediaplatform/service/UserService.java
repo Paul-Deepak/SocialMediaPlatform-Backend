@@ -20,6 +20,7 @@ public class UserService {
     private PostRepo postRepo;
 
     public User registerUser(User user) {
+        user.setUserId(null);
         user.setCreatedDate(new Date());
         user.setActive(true);
         user.setModifiedDate(new Date());
@@ -61,7 +62,7 @@ public class UserService {
         return otherUserPosts;
     }
 
-
+    //for searching
     public User getUserById(Long userId) {
         return userRepo.findById(userId).get();
     }
