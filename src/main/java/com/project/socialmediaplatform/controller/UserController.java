@@ -17,7 +17,6 @@ import com.project.socialmediaplatform.service.PostService;
 import com.project.socialmediaplatform.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,27 +48,27 @@ public class UserController {
     //     return ResponseEntity.ok(user);
     // }
 
-    @PutMapping("/update/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         User updatedUserInfo = userService.updateUser(userId, updatedUser);
         return ResponseEntity.ok(updatedUserInfo);
     }
 
-    @PutMapping("/deactivate/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<String> deactivateUser(@PathVariable Long userId) {
         userService.deactivateUser(userId);
         return ResponseEntity.ok("Deactivated Successfully");
     }
 
     //createpost
-    @PostMapping("post/{userId}")
+    @PostMapping("/{userId}/post")
     public ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody byte[] postContent) {
         User user = userService.getUserById(userId);
         Post createdPost = postService.createPost(user, postContent);
         return ResponseEntity.ok(createdPost);
     }
     //deletepost
-    @PutMapping("post/delete/{postId}")
+    @DeleteMapping("/post/{postId}")
     public ResponseEntity<Post> deletePost(@PathVariable Long postId) {
         Post post=postService.deletePost(postId);
         return ResponseEntity.ok(post);
@@ -83,7 +82,7 @@ public class UserController {
     }
     
     //viewposts
-    @GetMapping("seeposts/{userId}")
+    @GetMapping("/{userId}/post")
     public ResponseEntity<List<Post>> getOtherUserPosts(@PathVariable Long userId) {
         List<Post> otherUserPosts = userService.getOtherUserPosts(userId);
         return ResponseEntity.ok(otherUserPosts);

@@ -23,7 +23,7 @@ public class Post {
     private Long postId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Lob
@@ -36,7 +36,7 @@ public class Post {
     @Column(name = "last_modified_on")
     private Timestamp lastModifiedOn;
 
-    @Column(name = "isdeleted")
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 
     public Post() {

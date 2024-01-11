@@ -10,18 +10,16 @@ import com.project.socialmediaplatform.model.Like;
 import com.project.socialmediaplatform.model.LikeKey;
 import com.project.socialmediaplatform.repository.LikeRepo;
 
-
 @Service
 public class LikesService {
 
     @Autowired
     private LikeRepo likeRepo;
 
-
-    public Like addLikeForPost(Long postId, Long userId) {
+    public Like addLikeForPost(Long userId, String type, Long postId) {
         LikeKey likekey = new LikeKey();
         likekey.setUserId(userId);
-        likekey.setLikeType("post");
+        likekey.setLikeType(type);
         likekey.setTypeId(postId);
 
         Like like = new Like();
@@ -33,15 +31,10 @@ public class LikesService {
 
     }
 
-    public void removeLikeForPost(LikeKey likeKey) {
-        LikeKey likeId = new LikeKey(likeKey.getUserId(), likeKey.getLikeType(), likeKey.getTypeId());
-        likeRepo.deleteById(likeId);
-    }
-
-    public Like addLikeForComment(Long userId, Long commentId) {
+    public Like addLikeForComment(Long userId, String type, Long commentId) {
         LikeKey likekey = new LikeKey();
         likekey.setUserId(userId);
-        likekey.setLikeType("comment");
+        likekey.setLikeType(type);
         likekey.setTypeId(commentId);
 
         Like like = new Like();
@@ -52,8 +45,13 @@ public class LikesService {
         return likeRepo.save(like);
     }
 
-    public void removeLikeForComment(LikeKey likeKey) {
-        LikeKey likeId = new LikeKey(likeKey.getUserId(), likeKey.getLikeType(), likeKey.getTypeId());
+    public void removeLikeForPost(Long userId, String type, Long postId) {
+        LikeKey likeId = new LikeKey(userId, type, postId);
+        likeRepo.deleteById(likeId);
+    }
+
+    public void removeLikeForComment(Long userId, String type, Long commentId) {
+        LikeKey likeId = new LikeKey(userId, type, commentId);
         likeRepo.deleteById(likeId);
     }
 

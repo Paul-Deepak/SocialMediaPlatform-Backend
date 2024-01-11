@@ -13,7 +13,7 @@ import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.service.CommentService;
 
 @RestController
-@RequestMapping("/api/post/comment")
+@RequestMapping("/api/user/post/comment")
 
 public class CommentController {
 
@@ -28,7 +28,7 @@ public class CommentController {
         return ResponseEntity.ok(editedComment);
     }
 
-     @PutMapping("/delete/{commentId}")
+    @DeleteMapping("/{commentId}")
     public ResponseEntity<Comment> removeComment(@PathVariable Long commentId) {
         Comment delComment=commentService.deleteComment(commentId);
         return ResponseEntity.ok(delComment);

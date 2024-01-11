@@ -21,14 +21,14 @@ public class Comment {
     private Long commentId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User userId;
 
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "post_id")
     private Post postId;
 
-    @Column(name = "comment_text", nullable = false, length = 50)
+    @Column(name = "comment_text")
     private String commentText;
 
     @Column(name = "created_on")
@@ -37,7 +37,7 @@ public class Comment {
     @Column(name = "last_modified_on")
     private Timestamp lastModifiedOn;
 
-    @Column(name = "isdeleted")
+    @Column(name = "is_deleted")
     private boolean isDeleted;
     
     public Comment() {
