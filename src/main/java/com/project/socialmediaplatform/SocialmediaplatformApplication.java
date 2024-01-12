@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         )
 
 public class SocialmediaplatformApplication {
-
+        
 	public static void main(String[] args) {
 		SpringApplication.run(SocialmediaplatformApplication.class, args);
 	}

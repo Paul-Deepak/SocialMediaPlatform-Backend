@@ -30,6 +30,9 @@ public class Post {
     @Column(name = "content")
     private byte[] content;
 
+    @Column(name = "post_caption")
+    private String caption;
+
     @Column(name = "created_on")
     private Timestamp postedOn;
 
@@ -42,10 +45,11 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long postId, User user, byte[] content, Timestamp postedOn, Timestamp lastModifiedOn,boolean isDeleted) {
+    public Post(Long postId, User user, byte[] content,String caption, Timestamp postedOn, Timestamp lastModifiedOn,boolean isDeleted) {
         this.postId = postId;
         this.user = user;
         this.content = content;
+        this.caption = caption;
         this.postedOn = postedOn;
         this.lastModifiedOn = lastModifiedOn;
         this.isDeleted =isDeleted;
@@ -99,6 +103,12 @@ public class Post {
         this.isDeleted = isDeleted;
     }
 
-    
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
 }

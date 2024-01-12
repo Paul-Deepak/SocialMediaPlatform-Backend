@@ -28,19 +28,7 @@ public class PostController {
     private PostService postService;
     
 
-    // //deletepost
-    // @DeleteMapping("post/{postId}")
-    // public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
-    //     postService.deletePost(postId);
-    //     return ResponseEntity.noContent().build();
-    // }
     
-    // //editpost
-    // @PutMapping("/post/{postId}")
-    // public ResponseEntity<Post> editPost(@PathVariable Long postId, @RequestBody byte[] updatedContent) {
-    //     Post editedPost = postService.editPost(postId, updatedContent);
-    //     return ResponseEntity.ok(editedPost);
-    // }
 
 }
 

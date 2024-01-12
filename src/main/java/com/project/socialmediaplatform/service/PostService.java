@@ -20,32 +20,26 @@ public class PostService {
     @Autowired
     public UserRepo userRepo;
 
-    public Post createPost(User user, byte[] postContent) {
+    public Post createPost(User user, Post newPost) {
         Post post = new Post();
         post.setUser(user);
-        post.setContent(postContent);
+        post.setContent(newPost.getContent());
+        post.setCaption(newPost.getCaption());
         post.setDeleted(false);
         post.setPostedOn(Timestamp.from(Instant.now()));
         post.setLastModifiedOn(Timestamp.from(Instant.now()));
         return postRepo.save(post);
     }
 
-    public Post editPost(Long postId, byte[] updatedContent) {
+    public Post editPost(Long postId, String updatedCaption) {
         Post existingPost = postRepo.findById(postId).get();
-        existingPost.setContent(updatedContent);
+        existingPost.setCaption(updatedCaption);
         existingPost.setLastModifiedOn(Timestamp.from(Instant.now()));
         return postRepo.save(existingPost);
     }
 
-    public Post deletePost(Long postId) {
-        try {
-            Post deletedPost=postRepo.findByPostId(postId).get(0);
-            deletedPost.setDeleted(true);
-            return postRepo.save(deletedPost);
-        } catch (Exception E) {
-            E.printStackTrace();
-        }
-        return null;
+    public void deletePost(Long postId) {
+        postRepo.deleteById(postId);
     }
 
     public Post getPostById(Long postId) {

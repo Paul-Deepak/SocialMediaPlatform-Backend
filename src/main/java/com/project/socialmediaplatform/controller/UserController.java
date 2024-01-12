@@ -62,22 +62,22 @@ public class UserController {
 
     //createpost
     @PostMapping("/{userId}/post")
-    public ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody byte[] postContent) {
+    public ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody Post newPost) {
         User user = userService.getUserById(userId);
-        Post createdPost = postService.createPost(user, postContent);
+        Post createdPost = postService.createPost(user, newPost);
         return ResponseEntity.ok(createdPost);
     }
     //deletepost
     @DeleteMapping("/post/{postId}")
-    public ResponseEntity<Post> deletePost(@PathVariable Long postId) {
-        Post post=postService.deletePost(postId);
-        return ResponseEntity.ok(post);
+    public ResponseEntity<String> deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+        return ResponseEntity.ok("Deleted Successfully");
     }
     
     //editpost
     @PutMapping("/post/{postId}")
-    public ResponseEntity<Post> editPost(@PathVariable Long postId, @RequestBody byte[] updatedContent) {
-        Post editedPost = postService.editPost(postId, updatedContent);
+    public ResponseEntity<Post> editPost(@PathVariable Long postId, @RequestBody String updatedCaption) {
+        Post editedPost = postService.editPost(postId, updatedCaption);
         return ResponseEntity.ok(editedPost);
     }
     

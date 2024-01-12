@@ -48,8 +48,7 @@ public class UserService {
     }
 
     public void deactivateUser(Long userId) {
-        userRepo.findById(userId)
-                .ifPresent(user -> {
+        userRepo.findById(userId).ifPresent(user -> {
                     user.setActive(false);
                     userRepo.save(user);
                 });

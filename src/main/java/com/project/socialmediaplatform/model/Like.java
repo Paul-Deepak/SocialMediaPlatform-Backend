@@ -13,7 +13,6 @@ import jakarta.persistence.Table;
 @Table(name = "likes")
 public class Like {
 
-    
     private Long likeId;
 
     @EmbeddedId
