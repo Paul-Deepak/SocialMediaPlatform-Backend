@@ -30,9 +30,6 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private PostService postService;
-
-    @Autowired
     private CommentService commentService;
     
 
@@ -58,34 +55,6 @@ public class UserController {
     public ResponseEntity<String> deactivateUser(@PathVariable Long userId) {
         userService.deactivateUser(userId);
         return ResponseEntity.ok("Deactivated Successfully");
-    }
-
-    //createpost
-    @PostMapping("/{userId}/post")
-    public ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody Post newPost) {
-        User user = userService.getUserById(userId);
-        Post createdPost = postService.createPost(user, newPost);
-        return ResponseEntity.ok(createdPost);
-    }
-    //deletepost
-    @DeleteMapping("/post/{postId}")
-    public ResponseEntity<String> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
-        return ResponseEntity.ok("Deleted Successfully");
-    }
-    
-    //editpost
-    @PutMapping("/post/{postId}")
-    public ResponseEntity<Post> editPost(@PathVariable Long postId, @RequestBody String updatedCaption) {
-        Post editedPost = postService.editPost(postId, updatedCaption);
-        return ResponseEntity.ok(editedPost);
-    }
-    
-    //viewposts
-    @GetMapping("/{userId}/post")
-    public ResponseEntity<List<Post>> getOtherUserPosts(@PathVariable Long userId) {
-        List<Post> otherUserPosts = userService.getOtherUserPosts(userId);
-        return ResponseEntity.ok(otherUserPosts);
     }
 
     //addcomment

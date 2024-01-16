@@ -28,6 +28,10 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post postId;
 
+    @ManyToOne
+    @JoinColumn(name = "parent_comment_id")
+    private Comment parentId;
+
     @Column(name = "comment_text")
     private String commentText;
 
@@ -43,16 +47,19 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Long commentId, User userId, Post postId, String commentText, Timestamp createdOn,
+    
+    public Comment(Long commentId, User userId, Post postId, Comment parentId, String commentText, Timestamp createdOn,
             Timestamp lastModifiedOn, boolean isDeleted) {
         this.commentId = commentId;
         this.userId = userId;
         this.postId = postId;
+        this.parentId = parentId;
         this.commentText = commentText;
         this.createdOn = createdOn;
         this.lastModifiedOn = lastModifiedOn;
         this.isDeleted = isDeleted;
     }
+
 
     public Long getCommentId() {
         return commentId;
@@ -109,6 +116,15 @@ public class Comment {
     public void setDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    public Comment getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Comment parentId) {
+        this.parentId = parentId;
+    }
+
 }
 
 

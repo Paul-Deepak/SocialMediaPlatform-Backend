@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.socialmediaplatform.model.Friend;
 import com.project.socialmediaplatform.model.Post;
+import com.project.socialmediaplatform.model.SearchModel;
 import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.PostRepo;
 import com.project.socialmediaplatform.repository.UserRepo;
@@ -15,10 +17,13 @@ import com.project.socialmediaplatform.repository.UserRepo;
 public class PostService {
 
     @Autowired
-    public PostRepo postRepo;
+    private PostRepo postRepo;
 
     @Autowired
-    public UserRepo userRepo;
+    private UserRepo userRepo;
+
+    @Autowired
+    private FriendListService friendListService;
 
     public Post createPost(User user, Post newPost) {
         Post post = new Post();
@@ -37,6 +42,13 @@ public class PostService {
         existingPost.setLastModifiedOn(Timestamp.from(Instant.now()));
         return postRepo.save(existingPost);
     }
+
+    // public List <Post> searchPost(SearchModel searchModel){
+    //     User user = userRepo.findByUserId(searchModel.getUserId());
+    //     // List<Friend> friends = friendListService.getFriends(userId);
+    //     List <Post> searchedPost = postRepo.findByCaption(searchModel);
+    //     return searchedPost;
+    // }
 
     public void deletePost(Long postId) {
         postRepo.deleteById(postId);

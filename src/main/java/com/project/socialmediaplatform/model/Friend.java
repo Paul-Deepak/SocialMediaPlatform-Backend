@@ -27,9 +27,15 @@ public class Friend {
     @ManyToOne
     @JoinColumn(name = "request_sent_to")
     private User friendId;
+    
+    @Column(name = "count")
+    private int count;
 
     @Column(name = "status_id")
     private int statusId; // PENDING(0),ACCEPTED(1),REJECTED(2),UNFRIEND(3)
+
+    @Column(name = "is_active")
+    private boolean isActive;
 
     @Column(name = "request_time")
     private Date requestTime;
@@ -40,17 +46,17 @@ public class Friend {
     public Friend() {
     }
 
-    public Friend(Long friendListId, User userId, User friendId, int statusId, Date requestTime, Date modifiedTime,
-            User requestSentBy) {
+    public Friend(Long friendListId, User userId, User friendId, int count, int statusId, boolean isActive,
+            Date requestTime, Date modifiedTime) {
         this.friendListId = friendListId;
         this.userId = userId;
         this.friendId = friendId;
+        this.count = count;
         this.statusId = statusId;
+        this.isActive = isActive;
         this.requestTime = requestTime;
         this.modifiedTime = modifiedTime;
     }
-
-
 
     public Long getFriendListId() {
         return friendListId;
@@ -98,6 +104,22 @@ public class Friend {
 
     public void setStatusId(int statusId) {
         this.statusId = statusId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
 }

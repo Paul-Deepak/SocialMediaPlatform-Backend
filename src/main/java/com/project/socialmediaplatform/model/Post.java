@@ -11,7 +11,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "posts")
