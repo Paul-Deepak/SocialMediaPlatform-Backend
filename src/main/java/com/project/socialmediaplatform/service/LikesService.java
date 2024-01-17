@@ -21,7 +21,6 @@ public class LikesService {
         likekey.setUserId(userId);
         likekey.setLikeType(type);
         likekey.setTypeId(postId);
-
         Like like = new Like();
         like.setId(likekey);
         like.setLastModifiedOn(Timestamp.from(Instant.now()));

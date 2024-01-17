@@ -16,7 +16,7 @@ public interface PostRepo extends JpaRepository<Post,Long>{
 
 
     @Query("select p from Post p where p.postId = :postId AND p.isDeleted = false")
-    List<Post> findByPostId(Long postId);
+    Post findByPostId(Long postId);
 
     @Query("select p from Post p where p.user = :user AND p.isDeleted = false")
     List<Post> findByUser(User user);

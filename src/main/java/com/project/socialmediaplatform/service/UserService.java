@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.socialmediaplatform.Exception.UserAlreadyExistsException;
+import com.project.socialmediaplatform.Exception.UserNotFoundException;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.PostRepo;
@@ -20,6 +22,9 @@ public class UserService {
     private PostRepo postRepo;
 
     public User registerUser(User user) {
+        if (userRepo.findByEmail(user.getEmail()) != null) {
+            throw new UserAlreadyExistsException("Email " + user.getEmail() + " already exists");
+        }
         user.setUserId(null);
         user.setCreatedDate(new Date());
         user.setActive(true);
@@ -29,54 +34,62 @@ public class UserService {
     }
 
     public User updateUser(Long userId, User updatedUser) {
-        return userRepo.findById(userId)
-                .map(user -> {
-                    if (updatedUser.getUserName()!=null)
-                        user.setUserName(updatedUser.getUserName());
-                    // if (updatedUser.getEmail() != null)
-                    // user.setEmail(updatedUser.getEmail());
-                    if (updatedUser.getProfilePic()!=null)
-                        user.setProfilePic(updatedUser.getProfilePic());
-                    if (updatedUser.getBio()!=null)
-                        user.setBio(updatedUser.getBio());
-                    if (updatedUser.getModifiedDate()!=null)
-                        user.setModifiedDate(new Date());
-                    if (updatedUser.getPassword()!=null)
-                        user.setPassword(new BCryptPasswordEncoder().encode(updatedUser.getPassword()));
-                    return userRepo.save(user);
-                }).get();
+        User user = userRepo.findByUserId(userId);
+        if (user == null) {
+            throw new UserNotFoundException("No such User exists");
+        }
+        if (updatedUser.getUserName() != null)
+            user.setUserName(updatedUser.getUserName());
+        if (updatedUser.getProfilePic() != null)
+            user.setProfilePic(updatedUser.getProfilePic());
+        if (updatedUser.getBio() != null)
+            user.setBio(updatedUser.getBio());
+        if (updatedUser.getModifiedDate() != null)
+            user.setModifiedDate(new Date());
+        if (updatedUser.getPassword() != null)
+            user.setPassword(new BCryptPasswordEncoder().encode(updatedUser.getPassword()));
+        return userRepo.save(user);
     }
 
     public void deactivateUser(Long userId) {
-        userRepo.findById(userId).ifPresent(user -> {
-                    user.setActive(false);
-                    userRepo.save(user);
-                });
+        User user = userRepo.findByUserId(userId);
+        if(user==null) {
+            throw new UserNotFoundException("No such User exists");
+        }
+        user.setActive(false);
+        userRepo.save(user);
     }
 
-
     public List<Post> getOtherUserPosts(Long userId) {
-        User user = userRepo.findById(userId).get();
+        User user = userRepo.findByUserId(userId);
+        if(user==null){
+            throw new UserNotFoundException("No such User Exists");
+        }
         List<Post> otherUserPosts = postRepo.findByUser(user);
         return otherUserPosts;
     }
 
-    //for searching
+    // for searching
     public User getUserById(Long userId) {
-        return userRepo.findById(userId).get();
+        User user = userRepo.findById(userId).orElse(null);
+        if(user==null){
+            throw new UserNotFoundException("No Such User Exists");
+        }
+        return user;
     }
 
-    //login
+    // login
     // public User userLogin(User user) {
-    //     String Email = user.getEmail();
-    //     String Pass = user.getPassword();
+    // String Email = user.getEmail();
+    // String Pass = user.getPassword();
 
-    //     User existingUser = userRepo.findByEmail(Email);
-    //     if(existingUser.getPassword().equals(new BCryptPasswordEncoder().encode(Pass)) ){
-    //         return user;
-    //     }
-    //     else
-    //     return null;
+    // User existingUser = userRepo.findByEmail(Email);
+    // if(existingUser.getPassword().equals(new
+    // BCryptPasswordEncoder().encode(Pass)) ){
+    // return user;
     // }
-    
+    // else
+    // return null;
+    // }
+
 }

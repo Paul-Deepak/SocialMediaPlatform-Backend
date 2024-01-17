@@ -6,6 +6,9 @@ import java.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.socialmediaplatform.Exception.CommentNotFoundException;
+import com.project.socialmediaplatform.Exception.PostNotFoundException;
+import com.project.socialmediaplatform.Exception.UserNotFoundException;
 import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.User;
@@ -22,7 +25,7 @@ public class CommentService {
     private UserRepo userRepo;
     @Autowired
     private PostRepo postRepo;
-  
+
     // public Comment addComment(Long postId, Long userId, String commentText) {
     // Post post=null;
     // try{
@@ -46,10 +49,10 @@ public class CommentService {
         User user = userRepo.findByUserId(userId);
         Post post = postRepo.findById(postId).orElse(null);
         if (user == null) {
-            return null;
+            throw new UserNotFoundException("No such User exists");
         }
         if (post == null) {
-            return null;
+            throw new PostNotFoundException("No such Post exists");
         }
         Comment comment = new Comment();
         comment.setPostId(post);
@@ -61,17 +64,21 @@ public class CommentService {
     }
 
     public Comment editComment(Long commentId, String updatedComment) {
-        commentRepo.findById(commentId).ifPresent(comment -> {
-            comment.setCommentText(updatedComment);
-            commentRepo.save(comment);
-        });
-        return null;
+        Comment comment = commentRepo.findByCommentId(commentId);
+        if (comment == null)
+            throw new CommentNotFoundException("No such Comment exists");
+        comment.setCommentText(updatedComment);
+        comment.setLastModifiedOn(Timestamp.from(Instant.now()));
+        return commentRepo.save(comment);
     }
 
     public Comment deleteComment(Long commentId) {
-        Comment comment=commentRepo.findById(commentId).get();
-            comment.setDeleted(true);
-            commentRepo.save(comment);
-            return comment;
-        }
+        Comment comment = commentRepo.findByCommentId(commentId);
+        if (comment == null)
+            throw new CommentNotFoundException("No such Comment exists");
+        comment.setDeleted(true);
+        comment.setLastModifiedOn(Timestamp.from(Instant.now()));
+        commentRepo.save(comment);
+        return comment;
     }
+}

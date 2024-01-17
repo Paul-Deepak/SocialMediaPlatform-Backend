@@ -1,5 +1,6 @@
 package com.project.socialmediaplatform.service;
 
+import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class FriendListService {
         Friend existingFriendship = friendListRepo.findByUserIdAndFriendIdAndIsActiveTrue(sender, receiver);
         int count;
 
-        if (existingFriendship!=null) {
+        if (existingFriendship != null) {
             Friend friend = existingFriendship;
             if (friend.getStatusId() == 2) {
                 count = friend.getCount() + 1;
@@ -53,8 +54,11 @@ public class FriendListService {
         User user1 = userRepo.findById(userId).get();
         User user2 = userRepo.findById(friendId).get();
         Friend friend = friendListRepo.findByUserIdAndFriendIdAndIsActiveTrue(user1, user2);
-        friend.setActive(true);
-        friend.setStatusId(1);
+        if (friend.getStatusId() == 0) {
+            friend.setActive(true);
+            friend.setStatusId(1);
+            friend.setModifiedTime(new Date());
+        }
         return friendListRepo.save(friend);
     }
 

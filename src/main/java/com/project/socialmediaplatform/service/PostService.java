@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.socialmediaplatform.Exception.PostNotFoundException;
 import com.project.socialmediaplatform.model.Friend;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.SearchModel;
@@ -37,7 +38,10 @@ public class PostService {
     }
 
     public Post editPost(Long postId, String updatedCaption) {
-        Post existingPost = postRepo.findById(postId).get();
+        Post existingPost = postRepo.findByPostId(postId);
+        if(existingPost==null){
+            throw new PostNotFoundException("No such Post Exist");
+        }
         existingPost.setCaption(updatedCaption);
         existingPost.setLastModifiedOn(Timestamp.from(Instant.now()));
         return postRepo.save(existingPost);
@@ -51,12 +55,17 @@ public class PostService {
     // }
 
     public void deletePost(Long postId) {
-        postRepo.deleteById(postId);
+        Post post = postRepo.findByPostId(postId);
+        if(post==null){
+            throw new PostNotFoundException("No Such Post Exists");
+        }
+        post.setLastModifiedOn(Timestamp.from(Instant.now()));
+        post.setDeleted(true);
+        postRepo.save(post);
     }
 
     public Post getPostById(Long postId) {
-        return postRepo.findByPostId(postId).get(0);
+        return postRepo.findById(postId).get();
     }
-    
 
 }

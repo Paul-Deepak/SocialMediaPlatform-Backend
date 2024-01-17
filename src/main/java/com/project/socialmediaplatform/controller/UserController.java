@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.socialmediaplatform.Exception.ValidationException;
 import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.User;
@@ -35,6 +36,18 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
+
+        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+            throw new ValidationException("Email is required");
+        }
+        if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
+            throw new ValidationException("Password is required");
+        }
+
+        if (user.getUserName() == null) {
+            throw new ValidationException("Username is required");
+        }
+
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
     }
@@ -62,8 +75,11 @@ public class UserController {
     public ResponseEntity<Comment> addComment(
             @PathVariable Long userId,
             @PathVariable Long postId,
-            @RequestBody String commentText) {
-        Comment addedComment = commentService.addComment(postId, commentText, userId);
+            @RequestBody Comment commentText) {
+                if(commentText.getCommentText()==null || commentText.getCommentText().trim().isEmpty()){
+                    throw new ValidationException("Comment field is empty");
+                }
+        Comment addedComment = commentService.addComment(postId, commentText.getCommentText(), userId);
         return ResponseEntity.ok(addedComment);
     }
 

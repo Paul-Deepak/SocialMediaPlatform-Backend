@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.socialmediaplatform.Exception.ValidationException;
 import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.SearchModel;
@@ -37,6 +38,9 @@ public class PostController {
      //createpost
      @PostMapping("/{userId}/post")
      public ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody Post newPost) {
+        if(newPost.getContent()==null){
+            throw new ValidationException("Post is Empty");
+        }
          User user = userService.getUserById(userId);
          Post createdPost = postService.createPost(user, newPost);
          return ResponseEntity.ok(createdPost);
@@ -50,8 +54,8 @@ public class PostController {
      
      //editpost
      @PutMapping("/post/{postId}")
-     public ResponseEntity<Post> editPost(@PathVariable Long postId, @RequestBody String updatedCaption) {
-         Post editedPost = postService.editPost(postId, updatedCaption);
+     public ResponseEntity<Post> editPost(@PathVariable Long postId, @RequestBody Post postUpdate) {
+         Post editedPost = postService.editPost(postId, postUpdate.getCaption());
          return ResponseEntity.ok(editedPost);
      }
      

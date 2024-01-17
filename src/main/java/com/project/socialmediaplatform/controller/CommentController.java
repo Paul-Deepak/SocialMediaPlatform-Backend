@@ -22,8 +22,8 @@ public class CommentController {
 
     
     @PutMapping("/{commentId}")
-    public ResponseEntity<Comment> editComment(@PathVariable Long commentId, @RequestBody String updatedCommentText) {
-        Comment editedComment = commentService.editComment(commentId, updatedCommentText);
+    public ResponseEntity<Comment> editComment(@PathVariable Long commentId, @RequestBody Comment updatedComment) {
+        Comment editedComment = commentService.editComment(commentId, updatedComment.getCommentText());
         return ResponseEntity.ok(editedComment);
     }
 
