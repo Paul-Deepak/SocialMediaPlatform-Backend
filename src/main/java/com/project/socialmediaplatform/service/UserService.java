@@ -70,8 +70,8 @@ public class UserService {
     }
 
     // for searching
-    public User getUserById(Long userId) {
-        User user = userRepo.findById(userId).orElse(null);
+    public User getUserByEmail(String email) {
+        User user = userRepo.findByEmail(email);
         if(user==null){
             throw new UserNotFoundException("No Such User Exists");
         }

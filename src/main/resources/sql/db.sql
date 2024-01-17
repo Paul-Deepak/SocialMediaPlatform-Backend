@@ -15,3 +15,19 @@ create table friendlist(friendlist_id int unsigned auto_increment unique key, re
 create table status(status_id int primary key, status varchar(10));
 
 insert into status values('0','PENDING'),('1','ACCEPTED'),('2','REJECTED'),('3','UNFRIEND');
+
+select * from users;
+
+-- for searching post in a friend's account
+SELECT * from Posts p INNER JOIN Users u ON u.user_id = p.user_id 
+INNER JOIN Friendlist f ON u.user_id = f.request_sent_by 
+WHERE (f.request_sent_by = 4 AND f.request_sent_to = 3 AND f.status_id = '1' ) 
+OR (f.request_sent_to = 3 AND f.request_sent_by = 4 AND f.status_id = '1' ) 
+AND LOWER(p.post_caption) LIKE LOWER(CONCAT('%', 'are', '%'));
+
+-- Search post in all the friends of user
+select * from posts p inner join users u on u.user_id = p.user_id
+INNER JOIN Friendlist f ON u.user_id = f.request_sent_by 
+where (f.request_sent_by = 4 and f.status_id='1')
+or (f.request_sent_to = 4 and f.status_id='1')
+AND LOWER(p.post_caption) LIKE LOWER(CONCAT('%', 'are', '%'));

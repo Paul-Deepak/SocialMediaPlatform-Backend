@@ -51,20 +51,23 @@ public class FriendListService {
     }
 
     public Friend acceptFriendRequest(Long userId, Long friendId) {
-        User user1 = userRepo.findById(userId).get();
-        User user2 = userRepo.findById(friendId).get();
+        User user1 = userRepo.findByUserId(userId);
+        User user2 = userRepo.findByUserId(friendId);
         Friend friend = friendListRepo.findByUserIdAndFriendIdAndIsActiveTrue(user1, user2);
-        if (friend.getStatusId() == 0) {
-            friend.setActive(true);
-            friend.setStatusId(1);
-            friend.setModifiedTime(new Date());
+        if (friend != null) {
+            if (friend.getStatusId() == 0) {
+                friend.setActive(true);
+                friend.setStatusId(1);
+                friend.setModifiedTime(new Date());
+            }
+            return friendListRepo.save(friend);
         }
-        return friendListRepo.save(friend);
+        return friend;
     }
 
     public Friend rejectFriendRequest(Long userId, Long friendId) {
-        User user1 = userRepo.findById(userId).get();
-        User user2 = userRepo.findById(friendId).get();
+        User user1 = userRepo.findByUserId(userId);
+        User user2 = userRepo.findByUserId(friendId);
         Friend friend = friendListRepo.findByUserIdAndFriendIdAndIsActiveTrue(user1, user2);
         friend.setStatusId(2);
         friend.setActive(false);

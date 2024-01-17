@@ -2,6 +2,7 @@ package com.project.socialmediaplatform.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.socialmediaplatform.Exception.ValidationException;
 import com.project.socialmediaplatform.model.Like;
 import com.project.socialmediaplatform.service.LikesService;
 
@@ -19,8 +20,11 @@ public class LikeController {
     private LikesService likeService;
 
     @PostMapping
-    public ResponseEntity<Like> addLikeForPost(@PathVariable Long userId, @PathVariable String type,
+    public ResponseEntity<Like> addLike(@PathVariable Long userId, @PathVariable String type,
             @PathVariable Long typeId) {
+        if (userId == null || type == null || typeId == null) {
+            throw new ValidationException("Required fields are missing");
+        }
         if (type.equals("post")) {
             Like addedLike = likeService.addLikeForPost(userId, type, typeId);
             return ResponseEntity.ok(addedLike);
@@ -32,7 +36,7 @@ public class LikeController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> removeLikeForPost(@PathVariable Long userId, @PathVariable String type,
+    public ResponseEntity<String> removeLike(@PathVariable Long userId, @PathVariable String type,
             @PathVariable Long typeId) {
         if (type.equals("post")) {
             likeService.removeLikeForPost(userId, type, typeId);

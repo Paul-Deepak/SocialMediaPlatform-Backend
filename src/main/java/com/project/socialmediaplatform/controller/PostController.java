@@ -18,6 +18,7 @@ import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.SearchModel;
 import com.project.socialmediaplatform.model.User;
+import com.project.socialmediaplatform.repository.UserRepo;
 import com.project.socialmediaplatform.service.PostService;
 import com.project.socialmediaplatform.service.UserService;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,9 @@ public class PostController {
     private PostService postService;
 
     @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
     private UserService userService;
     
      //createpost
@@ -41,7 +45,10 @@ public class PostController {
         if(newPost.getContent()==null){
             throw new ValidationException("Post is Empty");
         }
-         User user = userService.getUserById(userId);
+        if(newPost.getCaption()==null){
+            throw new ValidationException("Caption is required");
+        }
+         User user = userRepo.findByUserId(userId);
          Post createdPost = postService.createPost(user, newPost);
          return ResponseEntity.ok(createdPost);
      }

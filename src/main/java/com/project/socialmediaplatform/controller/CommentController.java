@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.socialmediaplatform.Exception.ValidationException;
 import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.service.CommentService;
 
@@ -23,6 +24,9 @@ public class CommentController {
     
     @PutMapping("/{commentId}")
     public ResponseEntity<Comment> editComment(@PathVariable Long commentId, @RequestBody Comment updatedComment) {
+        if(updatedComment.getCommentText()==null || updatedComment.getCommentText().trim().isEmpty()){
+            throw new ValidationException("Comment should not be empty");
+        }
         Comment editedComment = commentService.editComment(commentId, updatedComment.getCommentText());
         return ResponseEntity.ok(editedComment);
     }
