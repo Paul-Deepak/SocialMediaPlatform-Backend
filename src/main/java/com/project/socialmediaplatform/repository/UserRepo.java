@@ -17,5 +17,7 @@ public interface UserRepo extends JpaRepository<User,Long>{
     @Query("select u from User u where u.userId = :userId AND u.isActive=true")
     User findByUserId(Long userId);
 
+    @Query("select u from User u where u.userName LIKE LOWER(CONCAT('%', :searchWord , '%'))  AND u.isActive=true")
+    List<User> findAllByUserName(String searchWord);
     
 }

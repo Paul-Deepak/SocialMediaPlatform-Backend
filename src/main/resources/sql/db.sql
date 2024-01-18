@@ -18,7 +18,7 @@ insert into status values('0','PENDING'),('1','ACCEPTED'),('2','REJECTED'),('3',
 
 select * from users;
 
--- for searching post in a friend's account
+-- for searching post in a friend's list of posts
 SELECT * from Posts p INNER JOIN Users u ON u.user_id = p.user_id 
 INNER JOIN Friendlist f ON u.user_id = f.request_sent_by 
 WHERE (f.request_sent_by = 4 AND f.request_sent_to = 3 AND f.status_id = '1' ) 
@@ -30,4 +30,6 @@ select * from posts p inner join users u on u.user_id = p.user_id
 INNER JOIN Friendlist f ON u.user_id = f.request_sent_by 
 where (f.request_sent_by = 4 and f.status_id='1')
 or (f.request_sent_to = 4 and f.status_id='1')
-AND LOWER(p.post_caption) LIKE LOWER(CONCAT('%', 'are', '%'));
+AND p.post_caption LIKE LOWER(CONCAT('%', 'are', '%'));
+
+delete from posts where post_caption=null;

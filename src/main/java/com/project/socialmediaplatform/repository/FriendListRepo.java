@@ -24,8 +24,7 @@ public interface FriendListRepo extends JpaRepository<Friend, Long> {
     List<Friend> findByFriendIdAndStatusId(User user, int i);
    
 
-    // List<Friend> findByFriendIdOrUserIdAndStatus(User user, User user2, String status);
-    List<Friend> findByStatusIdAndFriendIdOrUserId(int i, User user, User user2);
+    List<Friend> findByStatusIdAndFriendIdOrUserId(int statusId, User user, User user2);
 
     // @Query(value= "select COALESCE(COUNT(*), 0) from friendlist where req_sent_by = :#{#user.userId} and req_sent_to = :#{#user.friendId}",nativeQuery = true)
     // int getCount(@Param("user") User userId,@Param("friend") User friendId);

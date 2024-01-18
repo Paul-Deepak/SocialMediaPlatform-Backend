@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.socialmediaplatform.Exception.AuthenticationException;
 import com.project.socialmediaplatform.Exception.UserAlreadyExistsException;
 import com.project.socialmediaplatform.Exception.UserNotFoundException;
 import com.project.socialmediaplatform.model.Post;
+import com.project.socialmediaplatform.model.SearchModel;
 import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.PostRepo;
 import com.project.socialmediaplatform.repository.UserRepo;
@@ -33,6 +35,20 @@ public class UserService {
         return userRepo.save(user);
     }
 
+    public User authenticateUser(String email, String password) {
+        User user = userRepo.findByEmail(email);
+        if (user == null)
+            throw new AuthenticationException("Invalid Email");
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (passwordEncoder.matches(password,user.getPassword())) {
+            return user;
+        } else {
+            throw new AuthenticationException(
+                    "Invalid credentials   " + " ******* " + user.getPassword());
+        }
+    }
+
     public User updateUser(Long userId, User updatedUser) {
         User user = userRepo.findByUserId(userId);
         if (user == null) {
@@ -53,7 +69,7 @@ public class UserService {
 
     public void deactivateUser(Long userId) {
         User user = userRepo.findByUserId(userId);
-        if(user==null) {
+        if (user == null) {
             throw new UserNotFoundException("No such User exists");
         }
         user.setActive(false);
@@ -62,7 +78,7 @@ public class UserService {
 
     public List<Post> getOtherUserPosts(Long userId) {
         User user = userRepo.findByUserId(userId);
-        if(user==null){
+        if (user == null) {
             throw new UserNotFoundException("No such User Exists");
         }
         List<Post> otherUserPosts = postRepo.findByUser(user);
@@ -72,10 +88,14 @@ public class UserService {
     // for searching
     public User getUserByEmail(String email) {
         User user = userRepo.findByEmail(email);
-        if(user==null){
+        if (user == null) {
             throw new UserNotFoundException("No Such User Exists");
         }
         return user;
+    }
+
+    public List<User> searchUserWithFilter(SearchModel searchModel) {
+        return userRepo.findAllByUserName(searchModel.getSearchWord());
     }
 
     // login
@@ -91,5 +111,14 @@ public class UserService {
     // else
     // return null;
     // }
+
+    public static void main(String[] args) {
+        
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        System.out.println(passwordEncoder.encode("pass"));
+        System.out.println(passwordEncoder.encode("pass"));
+
+    }
 
 }

@@ -47,12 +47,21 @@ public class PostService {
         return postRepo.save(existingPost);
     }
 
-    // public List <Post> searchPost(SearchModel searchModel){
-    //     User user = userRepo.findByUserId(searchModel.getUserId());
-    //     // List<Friend> friends = friendListService.getFriends(userId);
-    //     List <Post> searchedPost = postRepo.findByCaption(searchModel);
-    //     return searchedPost;
-    // }
+    public List <Post> searchPost(SearchModel searchModel){
+        List <Post> searchedPost = postRepo.findByCaption(searchModel.getSearchWord());
+        return searchedPost;
+    }
+    public List <Post> searchPostWithFilter(Long userId,Long friendId,String searchWord){
+        
+        try {
+            List <Post> searchedPost = postRepo.findByCaptionAndFriendId(userId,friendId,searchWord);
+            return searchedPost;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 
     public void deletePost(Long postId) {
         Post post = postRepo.findByPostId(postId);
