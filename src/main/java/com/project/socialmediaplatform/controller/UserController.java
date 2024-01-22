@@ -37,38 +37,38 @@ public class UserController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
+    // @PostMapping("/register")
+    // public ResponseEntity<User> registerUser(@RequestBody User user) {
 
-        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
-            throw new ValidationException("Email is required");
-        }
-        if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
-            throw new ValidationException("Password is required");
-        }
+    //     if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+    //         throw new ValidationException("Email is required");
+    //     }
+    //     if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
+    //         throw new ValidationException("Password is required");
+    //     }
 
-        if (user.getUserName() == null) {
-            throw new ValidationException("Username is required");
-        }
+    //     if (user.getUserName() == null) {
+    //         throw new ValidationException("Username is required");
+    //     }
 
-        User registeredUser = userService.registerUser(user);
-        return ResponseEntity.ok(registeredUser);
-    }
+    //     User registeredUser = userService.registerUser(user);
+    //     return ResponseEntity.ok(registeredUser);
+    // }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody User loginUser) {
+    // @PostMapping("/login")
+    // public ResponseEntity<String> authenticateUser(@RequestBody User loginUser) {
 
-        if (loginUser.getEmail() == null || loginUser.getEmail().trim().isEmpty()) {
-            throw new ValidationException("Email is required");
-        }
-        if (loginUser.getPassword() == null || loginUser.getPassword().trim().isEmpty()) {
-            throw new ValidationException("Password is required");
-        }
+    //     if (loginUser.getEmail() == null || loginUser.getEmail().trim().isEmpty()) {
+    //         throw new ValidationException("Email is required");
+    //     }
+    //     if (loginUser.getPassword() == null || loginUser.getPassword().trim().isEmpty()) {
+    //         throw new ValidationException("Password is required");
+    //     }
 
-        User authenticatedUser = userService.authenticateUser(loginUser.getEmail(), loginUser.getPassword());
+    //     User authenticatedUser = userService.authenticateUser(loginUser.getEmail(), loginUser.getPassword());
         
-        return ResponseEntity.ok("User authenticated successfully");
-    }
+    //     return ResponseEntity.ok("User authenticated successfully");
+    // }
 
     @PutMapping("/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {

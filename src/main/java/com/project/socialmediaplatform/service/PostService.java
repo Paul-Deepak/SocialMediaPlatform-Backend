@@ -39,7 +39,7 @@ public class PostService {
 
     public Post editPost(Long postId, String updatedCaption) {
         Post existingPost = postRepo.findByPostId(postId);
-        if(existingPost==null){
+        if (existingPost == null) {
             throw new PostNotFoundException("No such Post Exist");
         }
         existingPost.setCaption(updatedCaption);
@@ -47,25 +47,25 @@ public class PostService {
         return postRepo.save(existingPost);
     }
 
-    public List <Post> searchPost(SearchModel searchModel){
-        List <Post> searchedPost = postRepo.findByCaption(searchModel.getSearchWord());
+    public List<Post> searchPost(SearchModel searchModel) {
+        List<Post> searchedPost = postRepo.findByCaption(searchModel.getSearchWord());
         return searchedPost;
     }
-    public List <Post> searchPostWithFilter(Long userId,Long friendId,String searchWord){
-        
+
+    public List<Post> searchPostWithFilter(Long userId, Long friendId, String searchWord) {
         try {
-            List <Post> searchedPost = postRepo.findByCaptionAndFriendId(userId,friendId,searchWord);
+            List<Post> searchedPost = postRepo.findByCaptionAndFriendId(userId, friendId, searchWord);
             return searchedPost;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return null;
     }
 
     public void deletePost(Long postId) {
         Post post = postRepo.findByPostId(postId);
-        if(post==null){
+        if (post == null) {
             throw new PostNotFoundException("No Such Post Exists");
         }
         post.setLastModifiedOn(Timestamp.from(Instant.now()));

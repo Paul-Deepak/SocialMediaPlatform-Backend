@@ -1,4 +1,4 @@
-package com.project.socialmediaplatform.controller.Authentication;
+package com.project.socialmediaplatform.controller;
 
 import java.util.HashSet;
 import java.util.List;
@@ -52,9 +52,9 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
-        // User user = userRepo.findByEmail(loginRequest.getEmail());
-        // if (user == null)
-        //     throw new AuthenticationException("Invalid Email");
+        User user = userRepo.findByEmail(loginRequest.getEmail());
+        if (user == null)
+            throw new AuthenticationException("Invalid Email");
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),

@@ -24,9 +24,7 @@ import com.project.socialmediaplatform.security.services.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig{
-//     @Value("${spring.h2.console.path}")
-//   private String h2ConsolePath;
-  
+
   @Autowired
   UserDetailsServiceImpl userDetailsService;
 
@@ -65,12 +63,8 @@ public class WebSecurityConfig{
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> 
           auth.requestMatchers("/api/auth/**").permitAll()
-              .requestMatchers("/api/test/**").permitAll()
               .anyRequest().authenticated()
         );
-    
- // fix H2 database console: Refused to display ' in a frame because it set 'X-Frame-Options' to 'deny'
-    http.headers(headers -> headers.frameOptions(frameOption -> frameOption.sameOrigin()));
     
     http.authenticationProvider(authenticationProvider());
 

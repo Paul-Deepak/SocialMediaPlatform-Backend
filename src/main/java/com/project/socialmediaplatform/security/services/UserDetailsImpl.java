@@ -14,7 +14,7 @@ import com.project.socialmediaplatform.model.User;
 
 public class UserDetailsImpl implements UserDetails{
 
-private static final long serialVersionUID = 1L;
+// private static final long serialVersionUID = 1L;
 
   private Long id;
 
@@ -25,7 +25,7 @@ private static final long serialVersionUID = 1L;
   @JsonIgnore
   private String password;
 
-  private Collection<? extends GrantedAuthority> authorities;
+  // private Collection<? extends GrantedAuthority> authorities;
 
   public UserDetailsImpl(Long id,String email, String password){
     this.id = id;
@@ -46,7 +46,7 @@ private static final long serialVersionUID = 1L;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return authorities;
+    return null;
   }
 
   public Long getId() {
