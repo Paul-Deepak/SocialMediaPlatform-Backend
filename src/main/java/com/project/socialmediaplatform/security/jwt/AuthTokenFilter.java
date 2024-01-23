@@ -31,18 +31,26 @@ public class AuthTokenFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
     try {
-      String jwt = parseJwt(request);
-      if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+      // String jwt = parseJwt(request);
+      String requestTokenHeader = request.getHeader("Authorization");
+      String jwt = "";
+      if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+        jwt = requestTokenHeader.substring(7);
 
-        String userEmail = jwtUtils.getEmailFromJwtToken(jwt);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-        
-        UsernamePasswordAuthenticationToken authentication = 
-            new UsernamePasswordAuthenticationToken(userDetails,null,null);
-        
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+          String userEmail = jwtUtils.getEmailFromJwtToken(jwt);
+          UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
+          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
+              null, null);
+
+          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+          SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+      } else {
+        logger.warn("JWT Token String does not begin with Bearer");
       }
     } catch (Exception e) {
       logger.error("Cannot set user authentication: {}", e);
@@ -51,8 +59,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     filterChain.doFilter(request, response);
   }
 
-  private String parseJwt(HttpServletRequest request) {
-    String jwt = jwtUtils.getJwtFromCookies(request);
-    return jwt;
-  }    
+  // private String parseJwt(HttpServletRequest request) {
+  // String jwt = jwtUtils.getJwtFromCookies(request);
+  // return jwt;
+  // }
 }

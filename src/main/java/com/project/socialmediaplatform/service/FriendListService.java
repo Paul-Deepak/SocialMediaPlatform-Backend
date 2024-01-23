@@ -3,6 +3,7 @@ package com.project.socialmediaplatform.service;
 import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class FriendListService {
             }
             return friendListRepo.save(friend);
         }
-        return friend;
+        else throw new NoSuchElementException("No record found");
     }
 
     public Friend rejectFriendRequest(Long userId, Long friendId) {

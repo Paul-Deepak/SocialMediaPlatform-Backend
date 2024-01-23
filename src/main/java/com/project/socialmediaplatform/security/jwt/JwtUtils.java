@@ -33,25 +33,25 @@ public class JwtUtils {
   @Value("${socialmediaplatform.app.jwtCookieName}")
   private String jwtCookie;
 
-  public String getJwtFromCookies(HttpServletRequest request) {
-    Cookie cookie = WebUtils.getCookie(request, jwtCookie);
-    if (cookie != null) {
-      return cookie.getValue();
-    } else {
-      return null;
-    }
-  }
+  // public String getJwtFromCookies(HttpServletRequest request) {
+  //   Cookie cookie = WebUtils.getCookie(request, jwtCookie);
+  //   if (cookie != null) {
+  //     return cookie.getValue();
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
-  public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-    String jwt = generateTokenFromEmail(userPrincipal.getEmail());
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
-    return cookie;
-  }
+  // public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
+  //   String jwt = generateTokenFromEmail(userPrincipal.getEmail());
+  //   ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").httpOnly(true).build();
+  //   return cookie;
+  // }
 
-  public ResponseCookie getCleanJwtCookie() {
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
-    return cookie;
-  }
+  // public ResponseCookie getCleanJwtCookie() {
+  //   ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
+  //   return cookie;
+  // }
 
   public String getEmailFromJwtToken(String token) {
     return Jwts.parserBuilder().setSigningKey(key()).build()

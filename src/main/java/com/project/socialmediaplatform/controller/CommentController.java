@@ -11,19 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.socialmediaplatform.Exception.ValidationException;
 import com.project.socialmediaplatform.model.Comment;
+import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.service.CommentService;
 
 @RestController
 @RequestMapping("/api/user/post/comment")
 
-public class CommentController {
+public class CommentController extends UserManager{
 
     @Autowired
     private CommentService commentService;
 
-    
+  //need to authorize  
     @PutMapping("/{commentId}")
     public ResponseEntity<Comment> editComment(@PathVariable Long commentId, @RequestBody Comment updatedComment) {
+         User user = getUserFromAuthentication();
         if(updatedComment.getCommentText()==null || updatedComment.getCommentText().trim().isEmpty()){
             throw new ValidationException("Comment should not be empty");
         }

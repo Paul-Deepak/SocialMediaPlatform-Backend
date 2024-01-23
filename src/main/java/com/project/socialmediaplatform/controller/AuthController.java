@@ -64,13 +64,14 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        String jwtCookie = jwtUtils.generateTokenFromEmail(userDetails.getEmail());
 
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, jwtCookie)
                 .body(new UserInfoResponse(userDetails.getId(),
                         userDetails.getUsername(),
                         userDetails.getEmail()));
        
+              
         // } else {
         //     throw new AuthenticationException(
         //             "Invalid credentials   " + " ******* " + user.getPassword());
@@ -95,10 +96,10 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
-    @PostMapping("/signout")
-    public ResponseEntity<?> logoutUser() {
-        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(new MessageResponse("You've been signed out!"));
-    }
+    // @PostMapping("/signout")
+    // public ResponseEntity<?> logoutUser() {
+    //     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+    //     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+    //             .body(new MessageResponse("You've been signed out!"));
+    // }
 }

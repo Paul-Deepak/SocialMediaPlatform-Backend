@@ -1,19 +1,21 @@
 package com.project.socialmediaplatform.model;
 
+import java.sql.Date;
+
 public class SearchModel {
 
     private Long userId; 
     private String searchWord; 
-    private Long friendId;
-    private String UserName;
+    private String userName;
     private String email;
+    private Date postDate;
 
     
     public String getUserName() {
-        return UserName;
+        return userName;
     }
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
     public String getEmail() {
         return email;
@@ -33,18 +35,18 @@ public class SearchModel {
     public void setSearchWord(String searchWord) {
         this.searchWord = searchWord;
     }
-    public Long getFriendId() {
-        return friendId;
-    }
-    public void setFriendId(Long friendId) {
-        this.friendId = friendId;
-    }
     
-    public SearchModel(Long userId, String searchWord, Long friendId, String userName, String email) {
+    public Date getPostDate() {
+        return postDate;
+    }
+    public void setPostDate(Date postDate) {
+        this.postDate = postDate;
+    }
+    public SearchModel(Long userId, String searchWord, Date postDate, String userName, String email) {
         this.userId = userId;
         this.searchWord = searchWord;
-        this.friendId = friendId;
-        UserName = userName;
+        this.postDate = postDate;
+        this.userName = userName;
         this.email = email;
     }
     public SearchModel() {

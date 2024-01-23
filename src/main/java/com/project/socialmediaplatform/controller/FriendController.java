@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,41 +16,56 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.socialmediaplatform.model.Friend;
 import com.project.socialmediaplatform.model.User;
+import com.project.socialmediaplatform.repository.FriendListRepo;
+import com.project.socialmediaplatform.repository.UserRepo;
+import com.project.socialmediaplatform.security.services.UserDetailsImpl;
 import com.project.socialmediaplatform.service.FriendListService;
 
 @RestController
 @RequestMapping("/api/user/")
-public class FriendController {
+public class FriendController extends UserManager{
 
     @Autowired
     private FriendListService friendListService;
 
-    @PostMapping("/{userId}/friend/{friendId}")
-    public ResponseEntity<Friend> sendFriendRequest(@PathVariable User userId, @PathVariable User friendId) {
+    @Autowired
+    private FriendListRepo friendListRepo;
+
+    @PostMapping("/friend/{friendId}")
+    public ResponseEntity<Friend> sendFriendRequest(@PathVariable User friendId) {
+        User userId = getUserFromAuthentication();
         Friend friendReq = friendListService.sendFriendRequest(userId, friendId);
         return ResponseEntity.ok(friendReq);
     }
 
-    @PutMapping("/{userId}/friend/{friendId}")
-    public ResponseEntity<Friend> acceptFriendRequest(@PathVariable Long friendId, @PathVariable Long userId) {
+    @PutMapping("/friend/{friendId}")
+    public ResponseEntity<Friend> acceptFriendRequest(@PathVariable Long friendId) {
+        User user = getUserFromAuthentication();
+        Long userId = user.getUserId();   
         Friend acceptReq = friendListService.acceptFriendRequest(friendId, userId);
         return ResponseEntity.ok(acceptReq);
     }
 
-    @DeleteMapping("/{userId}/friend/{friendId}")
-    public ResponseEntity<Friend> rejectFriendRequest(@PathVariable Long friendId, @PathVariable Long userId) {
+    @DeleteMapping("/friend/{friendId}")
+    public ResponseEntity<Friend> rejectFriendRequest(@PathVariable Long friendId) {
+        User user = getUserFromAuthentication();
+        Long userId = user.getUserId();
         Friend rejectReq = friendListService.rejectFriendRequest(friendId, userId);
         return ResponseEntity.ok(rejectReq);
     }
 
-    @GetMapping("/{userId}/friend")
-    public ResponseEntity<List<Friend>> seePendingFriendRequests(@PathVariable Long userId) {
+    @GetMapping("/friend")
+    public ResponseEntity<List<Friend>> seePendingFriendRequests() {
+        User user = getUserFromAuthentication();
+        Long userId = user.getUserId();
         List<Friend> pendingReq = friendListService.seePendingFriendRequests(userId);
         return ResponseEntity.ok(pendingReq);
     }
 
-    @GetMapping("/{userId}/friends")
-    public ResponseEntity<List<Friend>> getFriends(@PathVariable Long userId) {
+    @GetMapping("/friends")
+    public ResponseEntity<List<Friend>> getFriends() {
+        User user = getUserFromAuthentication();
+        Long userId = user.getUserId();
         List<Friend> friends = friendListService.getFriends(userId);
         return ResponseEntity.ok(friends);
     }

@@ -15,6 +15,7 @@ import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.SearchModel;
 import com.project.socialmediaplatform.model.User;
+import com.project.socialmediaplatform.security.services.UserDetailsImpl;
 import com.project.socialmediaplatform.service.CommentService;
 import com.project.socialmediaplatform.service.PostService;
 import com.project.socialmediaplatform.service.UserService;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 
 @RequestMapping("/api/user")
-public class UserController {
+public class UserController extends UserManager{
 
     @Autowired
     private UserService userService;
@@ -70,21 +71,25 @@ public class UserController {
     //     return ResponseEntity.ok("User authenticated successfully");
     // }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
-        User updatedUserInfo = userService.updateUser(userId, updatedUser);
+    @PutMapping("")
+    public ResponseEntity<User> updateUser(@RequestBody User updatedUser) {
+        User user = getUserFromAuthentication();
+        User updatedUserInfo = userService.updateUser(user.getUserId(), updatedUser);
         return ResponseEntity.ok(updatedUserInfo);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deactivateUser(@PathVariable Long userId) {
-        userService.deactivateUser(userId);
+    @DeleteMapping("")
+    public ResponseEntity<String> deactivateUser() {
+        User user = getUserFromAuthentication();
+        userService.deactivateUser(user.getUserId());
         return ResponseEntity.ok("Deactivated Successfully");
     }
 
     // search a user
-    @GetMapping("/{userId}/search")
+    @GetMapping("/search")
     public ResponseEntity<List<User>> searchUser(@ModelAttribute("search") SearchModel searchModel) {
+        User u = getUserFromAuthentication();
+
         List<User> user = new ArrayList<User>();
         if (searchModel.getSearchWord()!=null && !searchModel.getSearchWord().trim().isEmpty()) {
             user = userService.searchUserWithFilter(searchModel);
@@ -98,15 +103,13 @@ public class UserController {
     }
 
     // addcomment
-    @PostMapping("/{userId}/post/{postId}/comment")
-    public ResponseEntity<Comment> addComment(
-            @PathVariable Long userId,
-            @PathVariable Long postId,
-            @RequestBody Comment commentText) {
+    @PostMapping("/post/{postId}/comment")
+    public ResponseEntity<Comment> addComment(@PathVariable Long postId,@RequestBody Comment commentText) {
+        User user = getUserFromAuthentication();
         if (commentText.getCommentText() == null || commentText.getCommentText().trim().isEmpty()) {
             throw new ValidationException("Comment field is empty");
         }
-        Comment addedComment = commentService.addComment(postId, commentText.getCommentText(), userId);
+        Comment addedComment = commentService.addComment(postId, commentText.getCommentText(), user.getUserId());
         return ResponseEntity.ok(addedComment);
     }
 
