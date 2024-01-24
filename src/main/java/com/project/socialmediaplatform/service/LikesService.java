@@ -17,7 +17,6 @@ import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.CommentRepo;
 import com.project.socialmediaplatform.repository.LikeRepo;
 import com.project.socialmediaplatform.repository.PostRepo;
-import com.project.socialmediaplatform.repository.UserRepo;
 
 @Service
 public class LikesService {
@@ -25,24 +24,22 @@ public class LikesService {
     @Autowired
     private LikeRepo likeRepo;
 
-    @Autowired 
-    private UserRepo userRepo;
-
-    @Autowired 
+    @Autowired
     private PostRepo postRepo;
 
-    @Autowired 
+    @Autowired
     private CommentRepo commentRepo;
 
-    public Like addLikeForPost(Long userId, String type, Long postId) {
+    public Like addLikeForPost(User user, String type, Long postId) {
 
-        User user = userRepo.findByUserId(userId);
         Post post = postRepo.findByPostId(postId);
-        if(user==null) throw new UserNotFoundException("No such user exists");
-        if(post==null) throw new PostNotFoundException("No such post exists");
+        if (user == null)
+            throw new UserNotFoundException("No such user exists");
+        if (post == null)
+            throw new PostNotFoundException("No such post exists");
 
         LikeKey likekey = new LikeKey();
-        likekey.setUserId(userId);
+        likekey.setUserId(user.getUserId());
         likekey.setLikeType(type);
         likekey.setTypeId(postId);
         Like like = new Like();
@@ -54,15 +51,16 @@ public class LikesService {
 
     }
 
-    public Like addLikeForComment(Long userId, String type, Long commentId) {
+    public Like addLikeForComment(User user, String type, Long commentId) {
 
-        User user = userRepo.findByUserId(userId);
         Comment comment = commentRepo.findByCommentId(commentId);
-        if(user==null) throw new UserNotFoundException("No such user exists");
-        if(comment==null) throw new CommentNotFoundException("No such comment exists");
+        if (user == null)
+            throw new UserNotFoundException("No such user exists");
+        if (comment == null)
+            throw new CommentNotFoundException("No such comment exists");
 
         LikeKey likekey = new LikeKey();
-        likekey.setUserId(userId);
+        likekey.setUserId(user.getUserId());
         likekey.setLikeType(type);
         likekey.setTypeId(commentId);
 
@@ -74,13 +72,19 @@ public class LikesService {
         return likeRepo.save(like);
     }
 
-    public void removeLikeForPost(Long userId, String type, Long postId) {
-        LikeKey likeId = new LikeKey(userId, type, postId);
+    public void removeLikeForPost(User user, String type, Long postId) {
+        Post post = postRepo.findByPostId(postId);
+        if (post == null)
+            throw new PostNotFoundException("No post found");
+        LikeKey likeId = new LikeKey(user.getUserId(), type, postId);
         likeRepo.deleteById(likeId);
     }
 
-    public void removeLikeForComment(Long userId, String type, Long commentId) {
-        LikeKey likeId = new LikeKey(userId, type, commentId);
+    public void removeLikeForComment(User user, String type, Long commentId) {
+        Comment comment = commentRepo.findByCommentId(commentId);
+        if (comment == null)
+            throw new PostNotFoundException("No commment found");
+        LikeKey likeId = new LikeKey(user.getUserId(), type, commentId);
         likeRepo.deleteById(likeId);
     }
 

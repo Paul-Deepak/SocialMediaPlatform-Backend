@@ -5,10 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AuthorizationServiceException;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,18 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.socialmediaplatform.Exception.PostNotFoundException;
 import com.project.socialmediaplatform.Exception.UserNotFoundException;
 import com.project.socialmediaplatform.Exception.ValidationException;
-import com.project.socialmediaplatform.model.Comment;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.SearchModel;
 import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.PostRepo;
-import com.project.socialmediaplatform.repository.UserRepo;
-import com.project.socialmediaplatform.security.services.UserDetailsImpl;
 import com.project.socialmediaplatform.service.PostService;
-import com.project.socialmediaplatform.service.UserService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/user")
@@ -38,12 +30,6 @@ public class PostController extends UserManager{
 
     @Autowired
     private PostService postService;
-
-    @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private PostRepo postRepo;
@@ -82,8 +68,10 @@ public class PostController extends UserManager{
     public ResponseEntity<Post> editPost(@PathVariable Long postId, @RequestBody Post postUpdate) {
         User user = getUserFromAuthentication();
         Post post = postRepo.findByPostId(postId);
+        if(post==null)
+        throw new PostNotFoundException("No such post Exists");
         if(post.getUser()==user){
-            Post editedPost = postService.editPost(postId, postUpdate.getCaption());
+            Post editedPost = postService.editPost(post, postUpdate.getCaption());
             return ResponseEntity.ok(editedPost);
         }
         else throw new AuthorizationServiceException("Unauthorized action");

@@ -2,7 +2,6 @@ package com.project.socialmediaplatform.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.socialmediaplatform.Exception.ValidationException;
 import com.project.socialmediaplatform.model.Comment;
-import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.SearchModel;
 import com.project.socialmediaplatform.model.User;
-import com.project.socialmediaplatform.security.services.UserDetailsImpl;
 import com.project.socialmediaplatform.service.CommentService;
-import com.project.socialmediaplatform.service.PostService;
 import com.project.socialmediaplatform.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,15 +97,5 @@ public class UserController extends UserManager{
         return null;
     }
 
-    // addcomment
-    @PostMapping("/post/{postId}/comment")
-    public ResponseEntity<Comment> addComment(@PathVariable Long postId,@RequestBody Comment commentText) {
-        User user = getUserFromAuthentication();
-        if (commentText.getCommentText() == null || commentText.getCommentText().trim().isEmpty()) {
-            throw new ValidationException("Comment field is empty");
-        }
-        Comment addedComment = commentService.addComment(postId, commentText.getCommentText(), user.getUserId());
-        return ResponseEntity.ok(addedComment);
-    }
 
 }

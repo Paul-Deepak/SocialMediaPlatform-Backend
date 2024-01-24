@@ -26,25 +26,6 @@ public class CommentService {
     @Autowired
     private PostRepo postRepo;
 
-    // public Comment addComment(Long postId, Long userId, String commentText) {
-    // Post post=null;
-    // try{
-    // post = postService.getPostById(postId);
-    // }
-    // catch(Exception E){
-    // E.printStackTrace();
-    // }
-
-    // Comment comment = new Comment();
-    // comment.setPost(post);
-    // comment.setUser(userRepo.findById(userId)
-    // .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " +
-    // userId)));
-    // comment.setCommentText(commentText);
-    // comment.setCommentedOn(Timestamp.from(Instant.now()));
-    // comment.setLastModifiedOn(Timestamp.from(Instant.now()));
-    // return commentRepo.save(comment);
-    // }
     public Comment addComment(long userId, String newComment, long postId) {
         User user = userRepo.findByUserId(userId);
         Post post = postRepo.findById(postId).orElse(null);
@@ -63,18 +44,18 @@ public class CommentService {
         return commentRepo.save(comment);
     }
 
-    public Comment editComment(Long commentId, String updatedComment) {
+    public Comment editComment(User user,Long commentId, String updatedComment) {
         Comment comment = commentRepo.findByCommentId(commentId);
-        if (comment == null)
+        if(user!=comment.getUserId() || comment == null )
             throw new CommentNotFoundException("No such Comment exists");
         comment.setCommentText(updatedComment);
         comment.setLastModifiedOn(Timestamp.from(Instant.now()));
         return commentRepo.save(comment);
-    }
+        }
 
-    public Comment deleteComment(Long commentId) {
+    public Comment deleteComment(User user,Long commentId) {
         Comment comment = commentRepo.findByCommentId(commentId);
-        if (comment == null)
+        if (comment == null || user != comment.getUserId())
             throw new CommentNotFoundException("No such Comment exists");
         comment.setDeleted(true);
         comment.setLastModifiedOn(Timestamp.from(Instant.now()));

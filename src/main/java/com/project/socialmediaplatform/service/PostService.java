@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.project.socialmediaplatform.Exception.PostNotFoundException;
-import com.project.socialmediaplatform.Exception.UserNotFoundException;
 import com.project.socialmediaplatform.model.Friend;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.SearchModel;
@@ -42,48 +41,29 @@ public class PostService {
         return postRepo.save(post);
     }
 
-    public Post editPost(Long postId, String updatedCaption) {
-        Post existingPost = postRepo.findByPostId(postId);
-        if (existingPost == null) {
-            throw new PostNotFoundException("No such Post Exist");
-        }
-        existingPost.setCaption(updatedCaption);
-        existingPost.setLastModifiedOn(Timestamp.from(Instant.now()));
-        return postRepo.save(existingPost);
+    public Post editPost(Post post, String updatedCaption) {
+        post.setCaption(updatedCaption);
+        post.setLastModifiedOn(Timestamp.from(Instant.now()));
+        return postRepo.save(post);
     }
 
-    // public List<Post> searchPost(SearchModel searchModel) {
-    //     List<Post> searchedPost = postRepo.findByCaption(searchModel.getSearchWord());
-    //     return searchedPost;
-    // }
-
-    // public List<Post> searchPostWithFilter(Long userId, Long friendId, String searchWord) {
-    //     try {
-    //         List<Post> searchedPost = postRepo.findByCaptionAndFriendId(userId, friendId, searchWord);
-    //         return searchedPost;
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-
-    //     return null;
-    // }
-        public List<Post> searchPosts(User user,SearchModel searchModel) {
+    public List<Post> searchPosts(User user, SearchModel searchModel) {
         List<Specification<Post>> specs = new ArrayList<>();
         String searchTerm = searchModel.getSearchWord();
         Date fromDate = searchModel.getPostDate();
         User currentUser = user;
         User userFriend = userRepo.findByUserId(searchModel.getUserId());
-        List<Friend>friendList = friendListService.getFriends(searchModel.getUserId());
+        List<Friend> friendList = friendListService.getFriends(searchModel.getUserId());
 
         List<User> friends = new ArrayList<>();
-        for(Friend f:friendList){
-            if(f.getFriendId()!=currentUser)
-            friends.add(f.getFriendId());
-            else if(f.getUserId()!=currentUser)
-            friends.add(f.getUserId());
+        for (Friend f : friendList) {
+            if (f.getFriendId() != currentUser)
+                friends.add(f.getFriendId());
+            else if (f.getUserId() != currentUser)
+                friends.add(f.getUserId());
         }
 
-        if (searchTerm!=null && !searchTerm.trim().isEmpty()) {
+        if (searchTerm != null && !searchTerm.trim().isEmpty()) {
             specs.add(PostSpecifications.captionContains(searchTerm));
         }
 
@@ -102,8 +82,6 @@ public class PostService {
         Specification<Post> combinedSpec = PostSpecifications.combineSpecifications(specs);
         return postRepo.findAll(combinedSpec);
     }
-
-
 
     public void deletePost(Long postId) {
         Post post = postRepo.findByPostId(postId);

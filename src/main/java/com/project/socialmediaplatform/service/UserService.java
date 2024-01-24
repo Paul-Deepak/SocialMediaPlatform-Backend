@@ -27,6 +27,12 @@ public class UserService {
         if (userRepo.findByEmail(user.getEmail()) != null) {
             throw new UserAlreadyExistsException("Email " + user.getEmail() + " already exists");
         }
+        // User checkUser = userRepo.findByEmailId(user.getEmail());
+        // if (checkUser != null && checkUser.isActive() == false) {
+        //     return userRepo.insertUserIgnoreDuplicate( user.getUserName(), user.getEmail(),
+        //             new BCryptPasswordEncoder().encode(user.getPassword()), user.getProfilePic(), user.getBio(),
+        //             new Date(), new Date(), true);
+        // }
         user.setUserId(null);
         user.setCreatedDate(new Date());
         user.setActive(true);
@@ -41,7 +47,7 @@ public class UserService {
             throw new AuthenticationException("Invalid Email");
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        if (passwordEncoder.matches(password,user.getPassword())) {
+        if (passwordEncoder.matches(password, user.getPassword())) {
             return user;
         } else {
             throw new AuthenticationException(
@@ -96,29 +102,6 @@ public class UserService {
 
     public List<User> searchUserWithFilter(SearchModel searchModel) {
         return userRepo.findAllByUserName(searchModel.getSearchWord());
-    }
-
-    // login
-    // public User userLogin(User user) {
-    // String Email = user.getEmail();
-    // String Pass = user.getPassword();
-
-    // User existingUser = userRepo.findByEmail(Email);
-    // if(existingUser.getPassword().equals(new
-    // BCryptPasswordEncoder().encode(Pass)) ){
-    // return user;
-    // }
-    // else
-    // return null;
-    // }
-
-    public static void main(String[] args) {
-        
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-        System.out.println(passwordEncoder.encode("pass"));
-        System.out.println(passwordEncoder.encode("pass"));
-
     }
 
 }

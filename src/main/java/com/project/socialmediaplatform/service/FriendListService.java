@@ -1,11 +1,8 @@
 package com.project.socialmediaplatform.service;
 
-import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +36,6 @@ public class FriendListService {
         }
 
         Friend friendRequest = new Friend();
-
         friendRequest.setUserId(sender);
         friendRequest.setFriendId(receiver);
         friendRequest.setStatusId(0);

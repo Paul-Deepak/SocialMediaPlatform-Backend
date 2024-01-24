@@ -38,7 +38,7 @@ public class User {
     @Column(name = "modified_date")
     private Date modifiedDate;
 
-    @Column(name = "isactive")
+    @Column(name = "is_active")
     private boolean isActive;
 
     public User() {

@@ -1,10 +1,7 @@
 package com.project.socialmediaplatform.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.UserRepo;
@@ -16,6 +13,6 @@ public class UserManager {
      protected User getUserFromAuthentication() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();   
         String email = ((UserDetailsImpl) principal).getEmail();
-        return userRepo.findByEmailId(email).orElse(null);
+        return userRepo.findByEmail(email);
     }
 }
