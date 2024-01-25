@@ -2,10 +2,10 @@ package com.project.socialmediaplatform.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.socialmediaplatform.Exception.FriendRequestNotFoundException;
 import com.project.socialmediaplatform.model.Friend;
 import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.repository.FriendListRepo;
@@ -27,6 +27,7 @@ public class FriendListService {
         if (existingFriendship != null) {
             Friend friend = existingFriendship;
             if (friend.getStatusId() == 2) {
+                friend.setActive(false);
                 count = friend.getCount() + 1;
             } else {
                 count = 1;
@@ -56,24 +57,32 @@ public class FriendListService {
                 friend.setActive(true);
                 friend.setStatusId(1);
                 friend.setModifiedTime(new Date());
+                return friendListRepo.save(friend);
             }
-            return friendListRepo.save(friend);
+            else throw new FriendRequestNotFoundException("No Pending Friend Request with this user found");
         }
-        else throw new NoSuchElementException("No record found");
+        else throw new FriendRequestNotFoundException("Friend Request Not found");
     }
 
     public Friend rejectFriendRequest(Long userId, Long friendId) {
         User user1 = userRepo.findByUserId(userId);
         User user2 = userRepo.findByUserId(friendId);
         Friend friend = friendListRepo.findByUserIdAndFriendIdAndIsActiveTrue(user1, user2);
-        friend.setStatusId(2);
-        friend.setActive(false);
-        return friendListRepo.save(friend);
+        if (friend != null) {
+            if (friend.getStatusId() == 0) {
+                friend.setStatusId(2);
+                friend.setModifiedTime(new Date());
+                friend.setActive(true);
+                return friendListRepo.save(friend);
+            } else
+                throw new FriendRequestNotFoundException("No Pending Friend Request with this user found");
+        } else
+            throw new FriendRequestNotFoundException("Friend Request Not found");
     }
 
     public List<Friend> seePendingFriendRequests(Long userId) {
         User user = userRepo.findByUserId(userId);
-        return friendListRepo.findByFriendIdAndStatusId(user, 0);
+        return friendListRepo.findByFriendIdAndStatusIdAndIsActiveTrue(user, 0);
     }
 
     public List<Friend> getFriends(Long userId) {

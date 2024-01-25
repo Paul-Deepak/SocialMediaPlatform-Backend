@@ -53,7 +53,7 @@ public class PostService {
         Date fromDate = searchModel.getPostDate();
         User currentUser = user;
         User userFriend = userRepo.findByUserId(searchModel.getUserId());
-        List<Friend> friendList = friendListService.getFriends(searchModel.getUserId());
+        List<Friend> friendList = friendListService.getFriends(user.getUserId());
 
         List<User> friends = new ArrayList<>();
         for (Friend f : friendList) {

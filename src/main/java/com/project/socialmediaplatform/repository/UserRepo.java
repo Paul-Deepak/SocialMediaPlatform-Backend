@@ -28,9 +28,9 @@ public interface UserRepo extends JpaRepository<User,Long>{
     @Query("select u from User u where u.userName LIKE LOWER(CONCAT('%', :searchWord , '%'))  AND u.isActive=true")
     List<User> findAllByUserName(String searchWord);
     
-    //  @Query(value = "INSERT IGNORE INTO Users( user_name, email, password, profile_pic, bio, created_date, modified_date, is_active) VALUES ( :userName, :email, :password, :profilePic, :bio, :createdDate, :modifiedDate, :isActive)", nativeQuery = true)
+    //  @Query(value = "INSERT IGNORE INTO users(user_name, email, password, profile_pic, bio, created_date, modified_date, is_active) VALUES (:userName, :email, :password, :profilePic, :bio, :createdDate, :modifiedDate, :isActive)", nativeQuery = true)
     // User insertUserIgnoreDuplicate(
-    //     // @Param("user_id") Long userId,
+        
     //     @Param("user_name") String userName,
     //     @Param("email") String email,
     //     @Param("password") String password,

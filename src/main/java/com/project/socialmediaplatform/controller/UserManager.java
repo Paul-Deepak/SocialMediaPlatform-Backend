@@ -10,6 +10,7 @@ import com.project.socialmediaplatform.security.services.UserDetailsImpl;
 public class UserManager {
     @Autowired
     private UserRepo userRepo;
+
      protected User getUserFromAuthentication() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();   
         String email = ((UserDetailsImpl) principal).getEmail();

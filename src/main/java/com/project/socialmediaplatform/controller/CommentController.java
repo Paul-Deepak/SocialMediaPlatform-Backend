@@ -15,7 +15,7 @@ import com.project.socialmediaplatform.model.User;
 import com.project.socialmediaplatform.service.CommentService;
 
 @RestController
-@RequestMapping("/api/user/post/comment")
+@RequestMapping("/api/user/post")
 
 public class CommentController extends UserManager{
 
@@ -23,7 +23,7 @@ public class CommentController extends UserManager{
     private CommentService commentService;
   
      // addcomment
-    @PostMapping("/post/{postId}/comment")
+    @PostMapping("/{postId}/comment")
     public ResponseEntity<Comment> addComment(@PathVariable Long postId,@RequestBody Comment commentText) {
         User user = getUserFromAuthentication();
         if (commentText.getCommentText() == null || commentText.getCommentText().trim().isEmpty()) {
@@ -32,8 +32,17 @@ public class CommentController extends UserManager{
         Comment addedComment = commentService.addComment(postId, commentText.getCommentText(), user.getUserId());
         return ResponseEntity.ok(addedComment);
     }
+    @PostMapping("/{postId}/comment/commentId")
+    public ResponseEntity<Comment> addComment(@PathVariable Long postId,@RequestBody Comment commentText,@PathVariable Comment commentId) {
+        User user = getUserFromAuthentication();
+        if (commentText.getCommentText() == null || commentText.getCommentText().trim().isEmpty()) {
+            throw new ValidationException("Comment field is empty");
+        }
+        Comment addedComment = commentService.addComment(postId, commentText.getCommentText(), user.getUserId(), commentId);
+        return ResponseEntity.ok(addedComment);
+    }
 
-    @PutMapping("/{commentId}")
+    @PutMapping("/comment/{commentId}")
     public ResponseEntity<Comment> editComment(@PathVariable Long commentId, @RequestBody Comment updatedComment) {
          User user = getUserFromAuthentication();
          
@@ -44,7 +53,7 @@ public class CommentController extends UserManager{
         return ResponseEntity.ok(editedComment);
     }
 
-    @DeleteMapping("/{commentId}")
+    @DeleteMapping("/comment/{commentId}")
     public ResponseEntity<Comment> removeComment(@PathVariable Long commentId) {
         User user = getUserFromAuthentication();
         Comment delComment=commentService.deleteComment(user,commentId);

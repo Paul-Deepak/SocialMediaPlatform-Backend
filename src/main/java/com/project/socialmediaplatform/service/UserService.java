@@ -29,9 +29,10 @@ public class UserService {
         }
         // User checkUser = userRepo.findByEmailId(user.getEmail());
         // if (checkUser != null && checkUser.isActive() == false) {
-        //     return userRepo.insertUserIgnoreDuplicate( user.getUserName(), user.getEmail(),
+        //     return userRepo.insertUserIgnoreDuplicate(user.getUserName(), user.getEmail(),
         //             new BCryptPasswordEncoder().encode(user.getPassword()), user.getProfilePic(), user.getBio(),
         //             new Date(), new Date(), true);
+
         // }
         user.setUserId(null);
         user.setCreatedDate(new Date());

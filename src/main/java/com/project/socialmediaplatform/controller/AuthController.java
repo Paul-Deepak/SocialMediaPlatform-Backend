@@ -79,7 +79,7 @@ public class AuthController {
             throw new ValidationException("Username is required");
         }
 
-        User newUser = userService.registerUser(user);
+        userService.registerUser(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 

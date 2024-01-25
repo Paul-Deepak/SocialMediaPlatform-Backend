@@ -1,6 +1,6 @@
 package com.project.socialmediaplatform.repository;
 
-import org.antlr.v4.runtime.atn.SemanticContext.AND;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.project.socialmediaplatform.model.Post;
-import com.project.socialmediaplatform.model.SearchModel;
 import com.project.socialmediaplatform.model.User;
 
 import java.util.List;

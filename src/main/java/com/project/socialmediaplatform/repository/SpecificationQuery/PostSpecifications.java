@@ -4,10 +4,8 @@ import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.project.socialmediaplatform.model.Friend;
 import com.project.socialmediaplatform.model.Post;
 import com.project.socialmediaplatform.model.User;
-import com.project.socialmediaplatform.repository.UserRepo;
 
 import jakarta.persistence.criteria.Predicate;
 

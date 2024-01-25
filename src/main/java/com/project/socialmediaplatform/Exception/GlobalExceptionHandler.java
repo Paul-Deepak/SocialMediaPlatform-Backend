@@ -32,6 +32,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleCommentNotFoundException(CommentNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(FriendRequestNotFoundException.class)
+    public ResponseEntity<String> handleFriendRequestNotFoundException(FriendRequestNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<String> handleValidationException(ValidationException ex) {

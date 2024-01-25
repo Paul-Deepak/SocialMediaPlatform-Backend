@@ -26,7 +26,7 @@ public class CommentService {
     @Autowired
     private PostRepo postRepo;
 
-    public Comment addComment(long userId, String newComment, long postId) {
+    public Comment addComment(long postId, String newComment, long userId) {
         User user = userRepo.findByUserId(userId);
         Post post = postRepo.findById(postId).orElse(null);
         if (user == null) {
@@ -61,5 +61,24 @@ public class CommentService {
         comment.setLastModifiedOn(Timestamp.from(Instant.now()));
         commentRepo.save(comment);
         return comment;
+    }
+
+    public Comment addComment(Long postId, String commentText, Long userId, Comment commentId) {
+        User user = userRepo.findByUserId(userId);
+        Post post = postRepo.findByPostId(postId);
+        if (user == null) {
+            throw new UserNotFoundException("No such User exists");
+        }
+        if (post == null) {
+            throw new PostNotFoundException("No such Post exists");
+        }
+        Comment comment = new Comment();
+        comment.setPostId(post);
+        comment.setUserId(user);
+        comment.setParentId(commentId);
+        comment.setCommentText(commentText);
+        comment.setCreatedOn(Timestamp.from(Instant.now()));
+        comment.setLastModifiedOn(Timestamp.from(Instant.now()));
+        return commentRepo.save(comment);
     }
 }
