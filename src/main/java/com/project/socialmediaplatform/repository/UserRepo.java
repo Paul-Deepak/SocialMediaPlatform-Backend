@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.project.socialmediaplatform.model.User;
 
 @Repository
-public interface UserRepo extends JpaRepository<User,Long>{
+public interface UserRepo extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.email = :email AND u.isActive=true")
     User findByEmail(String email);
@@ -27,17 +27,20 @@ public interface UserRepo extends JpaRepository<User,Long>{
 
     @Query("select u from User u where u.userName LIKE LOWER(CONCAT('%', :searchWord , '%'))  AND u.isActive=true")
     List<User> findAllByUserName(String searchWord);
-    
-    //  @Query(value = "INSERT IGNORE INTO users(user_name, email, password, profile_pic, bio, created_date, modified_date, is_active) VALUES (:userName, :email, :password, :profilePic, :bio, :createdDate, :modifiedDate, :isActive)", nativeQuery = true)
+
+    // @Query(value = "INSERT IGNORE INTO users(user_name, email, password,
+    // profile_pic, bio, created_date, modified_date, is_active) VALUES (:userName,
+    // :email, :password, :profilePic, :bio, :createdDate, :modifiedDate,
+    // :isActive)", nativeQuery = true)
     // User insertUserIgnoreDuplicate(
-        
-    //     @Param("user_name") String userName,
-    //     @Param("email") String email,
-    //     @Param("password") String password,
-    //     @Param("profile_pic") byte[] bs,
-    //     @Param("bio") String bio,
-    //     @Param("created_date") Date date,
-    //     @Param("modified_date")  Date date2,
-    //     @Param("is_active") boolean isActive
+
+    // @Param("user_name") String userName,
+    // @Param("email") String email,
+    // @Param("password") String password,
+    // @Param("profile_pic") byte[] bs,
+    // @Param("bio") String bio,
+    // @Param("created_date") Date date,
+    // @Param("modified_date") Date date2,
+    // @Param("is_active") boolean isActive
     // );
 }

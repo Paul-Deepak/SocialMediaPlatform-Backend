@@ -1,6 +1,5 @@
 package com.project.socialmediaplatform.model;
 
-
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;

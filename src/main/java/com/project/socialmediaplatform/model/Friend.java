@@ -27,7 +27,7 @@ public class Friend {
     @ManyToOne
     @JoinColumn(name = "request_sent_to")
     private User friendId;
-    
+
     @Column(name = "count")
     private int count;
 
@@ -123,4 +123,3 @@ public class Friend {
     }
 
 }
-

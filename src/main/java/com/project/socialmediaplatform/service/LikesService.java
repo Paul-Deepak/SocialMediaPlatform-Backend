@@ -45,7 +45,7 @@ public class LikesService {
         Like like = new Like();
         like.setId(likekey);
         Like likeChecker = likeRepo.findById(likekey).orElse(null);
-        if(likeChecker!=null){
+        if (likeChecker != null) {
             likeChecker.setLastModifiedOn(Timestamp.from(Instant.now()));
             return likeRepo.save(likeChecker);
         }
@@ -72,7 +72,7 @@ public class LikesService {
         Like like = new Like();
         like.setId(likekey);
         Like likeChecker = likeRepo.findById(likekey).orElse(null);
-        if(likeChecker!=null){
+        if (likeChecker != null) {
             likeChecker.setLastModifiedOn(Timestamp.from(Instant.now()));
             return likeRepo.save(likeChecker);
         }

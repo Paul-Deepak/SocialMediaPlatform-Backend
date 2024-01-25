@@ -12,7 +12,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-
 @Component
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
@@ -28,7 +27,7 @@ public class JwtUtils {
 
   public String getEmailFromJwtToken(String token) {
     return Jwts.parserBuilder().setSigningKey(key()).build()
-               .parseClaimsJws(token).getBody().getSubject();
+        .parseClaimsJws(token).getBody().getSubject();
   }
 
   private Key key() {
@@ -52,12 +51,12 @@ public class JwtUtils {
     return false;
   }
 
-  public String generateTokenFromEmail(String email) {   
+  public String generateTokenFromEmail(String email) {
     return Jwts.builder()
-               .setSubject(email)
-               .setIssuedAt(new Date())
-               .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-               .signWith(key(), SignatureAlgorithm.HS256)
-               .compact();
+        .setSubject(email)
+        .setIssuedAt(new Date())
+        .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+        .signWith(key(), SignatureAlgorithm.HS256)
+        .compact();
   }
 }

@@ -58,10 +58,10 @@ public class FriendListService {
                 friend.setStatusId(1);
                 friend.setModifiedTime(new Date());
                 return friendListRepo.save(friend);
-            }
-            else throw new FriendRequestNotFoundException("No Pending Friend Request with this user found");
-        }
-        else throw new FriendRequestNotFoundException("Friend Request Not found");
+            } else
+                throw new FriendRequestNotFoundException("No Pending Friend Request with this user found");
+        } else
+            throw new FriendRequestNotFoundException("Friend Request Not found");
     }
 
     public Friend rejectFriendRequest(Long userId, Long friendId) {

@@ -44,14 +44,15 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long postId, User user, byte[] content,String caption, Timestamp postedOn, Timestamp lastModifiedOn,boolean isDeleted) {
+    public Post(Long postId, User user, byte[] content, String caption, Timestamp postedOn, Timestamp lastModifiedOn,
+            boolean isDeleted) {
         this.postId = postId;
         this.user = user;
         this.content = content;
         this.caption = caption;
         this.postedOn = postedOn;
         this.lastModifiedOn = lastModifiedOn;
-        this.isDeleted =isDeleted;
+        this.isDeleted = isDeleted;
     }
 
     public Long getPostId() {

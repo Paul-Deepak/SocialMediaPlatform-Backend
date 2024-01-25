@@ -2,9 +2,8 @@ package com.project.socialmediaplatform.model;
 
 import jakarta.persistence.Column;
 
-
 // @Embeddable
-public class LikeKey{
+public class LikeKey {
 
     @Column(name = "user_id")
     private Long userId;
@@ -14,7 +13,7 @@ public class LikeKey{
 
     @Column(name = "type_id")
     private Long typeId;
-    
+
     public Long getUserId() {
         return userId;
     }
@@ -38,7 +37,7 @@ public class LikeKey{
     public void setTypeId(Long typeId) {
         this.typeId = typeId;
     }
- 
+
     public LikeKey(Long userId, String likeType, Long typeId) {
         this.userId = userId;
         this.likeType = likeType;
@@ -47,5 +46,5 @@ public class LikeKey{
 
     public LikeKey() {
     }
-    
+
 }

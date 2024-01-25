@@ -7,6 +7,6 @@ import com.project.socialmediaplatform.model.Like;
 import com.project.socialmediaplatform.model.LikeKey;
 
 @Repository
-public interface LikeRepo extends JpaRepository<Like,LikeKey>{
-    
+public interface LikeRepo extends JpaRepository<Like, LikeKey> {
+
 }

@@ -44,16 +44,16 @@ public class CommentService {
         return commentRepo.save(comment);
     }
 
-    public Comment editComment(User user,Long commentId, String updatedComment) {
+    public Comment editComment(User user, Long commentId, String updatedComment) {
         Comment comment = commentRepo.findByCommentId(commentId);
-        if(user!=comment.getUserId() || comment == null )
+        if (user != comment.getUserId() || comment == null)
             throw new CommentNotFoundException("No such Comment exists");
         comment.setCommentText(updatedComment);
         comment.setLastModifiedOn(Timestamp.from(Instant.now()));
         return commentRepo.save(comment);
-        }
+    }
 
-    public Comment deleteComment(User user,Long commentId) {
+    public Comment deleteComment(User user, Long commentId) {
         Comment comment = commentRepo.findByCommentId(commentId);
         if (comment == null || user != comment.getUserId())
             throw new CommentNotFoundException("No such Comment exists");

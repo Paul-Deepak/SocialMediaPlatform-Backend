@@ -43,11 +43,10 @@ public class Comment {
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
-    
+
     public Comment() {
     }
 
-    
     public Comment(Long commentId, User userId, Post postId, Comment parentId, String commentText, Timestamp createdOn,
             Timestamp lastModifiedOn, boolean isDeleted) {
         this.commentId = commentId;
@@ -59,7 +58,6 @@ public class Comment {
         this.lastModifiedOn = lastModifiedOn;
         this.isDeleted = isDeleted;
     }
-
 
     public Long getCommentId() {
         return commentId;
@@ -126,5 +124,3 @@ public class Comment {
     }
 
 }
-
-
