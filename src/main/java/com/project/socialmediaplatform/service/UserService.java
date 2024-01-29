@@ -44,19 +44,19 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    public User authenticateUser(String email, String password) {
-        User user = userRepo.findByEmail(email);
-        if (user == null)
-            throw new AuthenticationException("Invalid Email");
+    // public User authenticateUser(String email, String password) {
+    //     User user = userRepo.findByEmail(email);
+    //     if (user == null)
+    //         throw new AuthenticationException("Invalid Email");
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            return user;
-        } else {
-            throw new AuthenticationException(
-                    "Invalid credentials   " + " ******* " + user.getPassword());
-        }
-    }
+    //     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    //     if (passwordEncoder.matches(password, user.getPassword())) {
+    //         return user;
+    //     } else {
+    //         throw new AuthenticationException(
+    //                 "Invalid credentials   " + " ******* " + user.getPassword());
+    //     }
+    // }
 
     public User updateUser(Long userId, User updatedUser) {
         User user = userRepo.findByUserId(userId);
@@ -81,8 +81,8 @@ public class UserService {
         if (user == null) {
             throw new UserNotFoundException("No such User exists");
         }
-        user.setActive(false);
-        userRepo.save(user);
+        // user.setActive(false);
+        userRepo.delete(user);
     }
 
     public List<Post> getOtherUserPosts(Long userId) {

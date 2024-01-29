@@ -41,6 +41,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleValidationException(ValidationException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(FriendRequestAlreadySentException.class)
+    public ResponseEntity<String> handleFriendRequestAlreadySentException(FriendRequestAlreadySentException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception ex) {

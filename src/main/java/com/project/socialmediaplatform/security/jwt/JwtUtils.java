@@ -22,9 +22,6 @@ public class JwtUtils {
   @Value("${socialmediaplatform.app.jwtExpirationMs}")
   private int jwtExpirationMs;
 
-  @Value("${socialmediaplatform.app.jwtCookieName}")
-  private String jwtCookie;
-
   public String getEmailFromJwtToken(String token) {
     return Jwts.parserBuilder().setSigningKey(key()).build()
         .parseClaimsJws(token).getBody().getSubject();

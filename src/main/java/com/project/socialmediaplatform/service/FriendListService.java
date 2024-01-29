@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.socialmediaplatform.Exception.FriendRequestAlreadySentException;
 import com.project.socialmediaplatform.Exception.FriendRequestNotFoundException;
 import com.project.socialmediaplatform.model.Friend;
 import com.project.socialmediaplatform.model.User;
@@ -30,7 +31,7 @@ public class FriendListService {
                 friend.setActive(false);
                 count = friend.getCount() + 1;
             } else {
-                count = 1;
+                throw new FriendRequestAlreadySentException("Friend Request Already sent");
             }
         } else {
             count = 1;
@@ -86,8 +87,7 @@ public class FriendListService {
     }
 
     public List<Friend> getFriends(Long userId) {
-        User user = userRepo.findByUserId(userId);
-        return friendListRepo.findByStatusIdAndFriendIdOrUserId(1, user, user);
+        return friendListRepo.findByUserIdAndStatusId(userId,1);
     }
 
 }
