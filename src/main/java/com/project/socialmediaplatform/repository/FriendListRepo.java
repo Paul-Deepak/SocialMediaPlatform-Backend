@@ -12,8 +12,6 @@ import java.util.List;
 @Repository
 public interface FriendListRepo extends JpaRepository<Friend, Long> {
 
-    // @Query("select friendListId from friend where userId = :userId and friendId =
-    // :friendId")
     Friend findByUserIdAndFriendId(User userId, User friendId);
 
     Friend findByUserIdAndFriendIdAndIsActiveTrue(User userId, User friendId);
@@ -25,9 +23,5 @@ public interface FriendListRepo extends JpaRepository<Friend, Long> {
 
     // pending req
     List<Friend> findByFriendIdAndStatusIdAndIsActiveTrue(User user, int i);
-
-    // @Query(value= "select COALESCE(COUNT(*), 0) from friendlist where req_sent_by
-    // = :#{#user.userId} and req_sent_to = :#{#user.friendId}",nativeQuery = true)
-    // int getCount(@Param("user") User userId,@Param("friend") User friendId);
 
 }

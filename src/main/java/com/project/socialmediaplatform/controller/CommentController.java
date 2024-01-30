@@ -32,6 +32,7 @@ public class CommentController extends UserManager{
         Comment addedComment = commentService.addComment(postId, commentText.getCommentText(), user.getUserId());
         return ResponseEntity.ok(addedComment);
     }
+    //add reply comment
     @PostMapping("/{postId}/comment/commentId")
     public ResponseEntity<Comment> addComment(@PathVariable Long postId,@RequestBody Comment commentText,@PathVariable Comment commentId) {
         User user = getUserFromAuthentication();
@@ -41,7 +42,7 @@ public class CommentController extends UserManager{
         Comment addedComment = commentService.addComment(postId, commentText.getCommentText(), user.getUserId(), commentId);
         return ResponseEntity.ok(addedComment);
     }
-
+    //edit comment
     @PutMapping("/comment/{commentId}")
     public ResponseEntity<Comment> editComment(@PathVariable Long commentId, @RequestBody Comment updatedComment) {
          User user = getUserFromAuthentication();

@@ -52,7 +52,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         logger.warn("JWT Token String does not begin with Bearer");
       }
     } catch (Exception e) {
-      logger.error("Cannot set user authentication: {}", e);
+      logger.error("Cannot set user authentication: ", e);
     }
 
     filterChain.doFilter(request, response);

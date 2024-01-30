@@ -20,8 +20,8 @@ public class PostSpecifications {
     public static Specification<Post> postedAfter(Date date) {
         return (root, query, criteriaBuilder) -> {
             Predicate postedAfterPredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("postedOn"), date);
-            Predicate isDeletedPredicted = criteriaBuilder.equal(root.get("isDeleted"), false);
-            return criteriaBuilder.and(postedAfterPredicate, isDeletedPredicted);
+            Predicate isDeletedPredicate = criteriaBuilder.equal(root.get("isDeleted"), false);
+            return criteriaBuilder.and(postedAfterPredicate, isDeletedPredicate);
         };
     }
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.project.socialmediaplatform.Exception.AuthenticationException;
+
 import com.project.socialmediaplatform.Exception.UserAlreadyExistsException;
 import com.project.socialmediaplatform.Exception.UserNotFoundException;
 import com.project.socialmediaplatform.model.Post;

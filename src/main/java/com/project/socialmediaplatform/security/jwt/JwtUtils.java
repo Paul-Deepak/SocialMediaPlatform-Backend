@@ -56,4 +56,11 @@ public class JwtUtils {
         .signWith(key(), SignatureAlgorithm.HS256)
         .compact();
   }
+  // public static void main(String args[]){
+  //   String s = "======================secretKey===========================";
+  //   byte[] arr=s.getBytes();
+  //   System.out.println((Decoders.BASE64.decode(s)));
+  //   System.out.println(arr);
+    
+  // }
 }
