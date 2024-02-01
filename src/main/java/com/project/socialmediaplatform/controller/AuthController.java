@@ -30,7 +30,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin("*")
+// @CrossOrigin("*")
 public class AuthController {
 
     @Autowired
