@@ -49,6 +49,7 @@ public class UserController extends UserManager{
     //     if (loginUser.getEmail() == null || loginUser.getEmail().trim().isEmpty()) {
     //         throw new ValidationException("Email is required");
     //     }
+    
     //     if (loginUser.getPassword() == null || loginUser.getPassword().trim().isEmpty()) {
     //         throw new ValidationException("Password is required");
     //     }

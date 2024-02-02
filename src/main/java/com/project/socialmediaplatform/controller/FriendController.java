@@ -62,5 +62,4 @@ public class FriendController extends UserManager{
         return ResponseEntity.ok(friends);
     }
 
-    // unfriend a friend
 }
