@@ -33,7 +33,7 @@ public class CommentController extends UserManager{
         return ResponseEntity.ok(addedComment);
     }
     //add reply comment
-    @PostMapping("/{postId}/comment/commentId")
+    @PostMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<Comment> addComment(@PathVariable Long postId,@RequestBody Comment commentText,@PathVariable Comment commentId) {
         User user = getUserFromAuthentication();
         if (commentText.getCommentText() == null || commentText.getCommentText().trim().isEmpty()) {

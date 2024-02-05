@@ -57,10 +57,11 @@ public class PostService {
 
         List<User> friends = new ArrayList<>();
         for (Friend f : friendList) {
-            if (f.getFriendId() != currentUser)
+            if (f.getFriendId() != currentUser) {
                 friends.add(f.getFriendId());
-            else if (f.getUserId() != currentUser)
+            } else if (f.getUserId() != currentUser) {
                 friends.add(f.getUserId());
+            }
         }
 
         if (searchTerm != null && !searchTerm.trim().isEmpty()) {

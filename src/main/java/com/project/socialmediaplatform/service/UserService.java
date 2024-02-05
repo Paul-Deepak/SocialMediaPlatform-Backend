@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import com.project.socialmediaplatform.Exception.UserAlreadyExistsException;
 import com.project.socialmediaplatform.Exception.UserNotFoundException;
 import com.project.socialmediaplatform.model.Post;
@@ -45,17 +44,17 @@ public class UserService {
     }
 
     // public User authenticateUser(String email, String password) {
-    //     User user = userRepo.findByEmail(email);
-    //     if (user == null)
-    //         throw new AuthenticationException("Invalid Email");
+    // User user = userRepo.findByEmail(email);
+    // if (user == null)
+    // throw new AuthenticationException("Invalid Email");
 
-    //     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    //     if (passwordEncoder.matches(password, user.getPassword())) {
-    //         return user;
-    //     } else {
-    //         throw new AuthenticationException(
-    //                 "Invalid credentials   " + " ******* " + user.getPassword());
-    //     }
+    // BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    // if (passwordEncoder.matches(password, user.getPassword())) {
+    // return user;
+    // } else {
+    // throw new AuthenticationException(
+    // "Invalid credentials " + " ******* " + user.getPassword());
+    // }
     // }
 
     public User updateUser(Long userId, User updatedUser) {

@@ -33,10 +33,12 @@ public class LikesService {
     public Like addLikeForPost(User user, String type, Long postId) {
 
         Post post = postRepo.findByPostId(postId);
-        if (user == null)
+        if (user == null) {
             throw new UserNotFoundException("No such user exists");
-        if (post == null)
+        }
+        if (post == null) {
             throw new PostNotFoundException("No such post exists");
+        }
 
         LikeKey likekey = new LikeKey();
         likekey.setUserId(user.getUserId());
@@ -44,6 +46,7 @@ public class LikesService {
         likekey.setTypeId(postId);
         Like like = new Like();
         like.setId(likekey);
+        
         Like likeChecker = likeRepo.findById(likekey).orElse(null);
         if (likeChecker != null) {
             likeChecker.setLastModifiedOn(Timestamp.from(Instant.now()));
@@ -59,10 +62,12 @@ public class LikesService {
     public Like addLikeForComment(User user, String type, Long commentId) {
 
         Comment comment = commentRepo.findByCommentId(commentId);
-        if (user == null)
+        if (user == null) {
             throw new UserNotFoundException("No such user exists");
-        if (comment == null)
+        }
+        if (comment == null) {
             throw new CommentNotFoundException("No such comment exists");
+        }
 
         LikeKey likekey = new LikeKey();
         likekey.setUserId(user.getUserId());
@@ -76,7 +81,7 @@ public class LikesService {
             likeChecker.setLastModifiedOn(Timestamp.from(Instant.now()));
             return likeRepo.save(likeChecker);
         }
- 
+
         like.setLastModifiedOn(Timestamp.from(Instant.now()));
         like.setLikedOn(Timestamp.from(Instant.now()));
 
@@ -85,16 +90,18 @@ public class LikesService {
 
     public void removeLikeForPost(User user, String type, Long postId) {
         Post post = postRepo.findByPostId(postId);
-        if (post == null)
+        if (post == null) {
             throw new PostNotFoundException("No post found");
+        }
         LikeKey likeId = new LikeKey(user.getUserId(), type, postId);
         likeRepo.deleteById(likeId);
     }
 
     public void removeLikeForComment(User user, String type, Long commentId) {
         Comment comment = commentRepo.findByCommentId(commentId);
-        if (comment == null)
+        if (comment == null) {
             throw new PostNotFoundException("No commment found");
+        }
         LikeKey likeId = new LikeKey(user.getUserId(), type, commentId);
         likeRepo.deleteById(likeId);
     }

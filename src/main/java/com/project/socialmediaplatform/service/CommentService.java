@@ -21,14 +21,16 @@ public class CommentService {
 
     @Autowired
     private CommentRepo commentRepo;
+
     @Autowired
     private UserRepo userRepo;
+
     @Autowired
     private PostRepo postRepo;
 
     public Comment addComment(long postId, String newComment, long userId) {
         User user = userRepo.findByUserId(userId);
-        Post post = postRepo.findById(postId).orElse(null);
+        Post post = postRepo.findByPostId(postId);
         if (user == null) {
             throw new UserNotFoundException("No such User exists");
         }
@@ -46,8 +48,9 @@ public class CommentService {
 
     public Comment editComment(User user, Long commentId, String updatedComment) {
         Comment comment = commentRepo.findByCommentId(commentId);
-        if (user != comment.getUserId() || comment == null)
+        if (user != comment.getUserId() || comment == null){
             throw new CommentNotFoundException("No such Comment exists");
+        }
         comment.setCommentText(updatedComment);
         comment.setLastModifiedOn(Timestamp.from(Instant.now()));
         return commentRepo.save(comment);
@@ -55,8 +58,9 @@ public class CommentService {
 
     public Comment deleteComment(User user, Long commentId) {
         Comment comment = commentRepo.findByCommentId(commentId);
-        if (comment == null || user != comment.getUserId())
+        if (comment == null || user != comment.getUserId()){
             throw new CommentNotFoundException("No such Comment exists");
+        }
         comment.setDeleted(true);
         comment.setLastModifiedOn(Timestamp.from(Instant.now()));
         commentRepo.save(comment);

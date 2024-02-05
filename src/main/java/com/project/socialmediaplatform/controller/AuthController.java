@@ -63,8 +63,6 @@ public class AuthController {
         String jwtCookie = jwtUtils.generateTokenFromEmail(userDetails.getEmail());
 
         return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, jwtCookie)
-        // .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION)
-        // .header(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Authorization, Content-Type")
                 .body(new UserInfoResponse(userDetails.getId(),
                         userDetails.getUsername(),
                         userDetails.getEmail()));

@@ -59,10 +59,12 @@ public class FriendListService {
                 friend.setStatusId(1);
                 friend.setModifiedTime(new Date());
                 return friendListRepo.save(friend);
-            } else
+            } else {
                 throw new FriendRequestNotFoundException("No Pending Friend Request with this user found");
-        } else
+            }
+        } else {
             throw new FriendRequestNotFoundException("Friend Request Not found");
+        }
     }
 
     public Friend rejectFriendRequest(Long userId, Long friendId) {
@@ -75,10 +77,12 @@ public class FriendListService {
                 friend.setModifiedTime(new Date());
                 friend.setActive(true);
                 return friendListRepo.save(friend);
-            } else
+            } else {
                 throw new FriendRequestNotFoundException("No Pending Friend Request with this user found");
-        } else
+            }
+        } else {
             throw new FriendRequestNotFoundException("Friend Request Not found");
+        }
     }
 
     public List<Friend> seePendingFriendRequests(Long userId) {
@@ -87,7 +91,7 @@ public class FriendListService {
     }
 
     public List<Friend> getFriends(Long userId) {
-        return friendListRepo.findByUserIdAndStatusId(userId,1);
+        return friendListRepo.findByUserIdAndStatusId(userId, 1);
     }
 
 }
